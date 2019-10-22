@@ -1,7 +1,7 @@
-package com.freshworks.fd.starter.todo.controller;
+package com.freshworks.starter.todo.controller;
 
-import com.freshworks.fd.starter.todo.model.Todo;
-import com.freshworks.fd.starter.todo.service.TodoService;
+import com.freshworks.starter.todo.model.Todo;
+import com.freshworks.starter.todo.service.TodoService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;

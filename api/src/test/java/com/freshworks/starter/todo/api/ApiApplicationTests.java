@@ -1,4 +1,4 @@
-package com.freshworks.fd.starter.todo.api;
+package com.freshworks.starter.todo.api;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

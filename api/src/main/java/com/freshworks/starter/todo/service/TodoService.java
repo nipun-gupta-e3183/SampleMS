@@ -1,8 +1,7 @@
-package com.freshworks.fd.starter.todo.service;
+package com.freshworks.starter.todo.service;
 
-import com.freshworks.fd.starter.todo.model.Todo;
-import com.freshworks.fd.starter.todo.repository.TodoRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.freshworks.starter.todo.model.Todo;
+import com.freshworks.starter.todo.repository.TodoRepository;
 import org.springframework.stereotype.Component;
 
 import java.util.List;

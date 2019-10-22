@@ -1,4 +1,4 @@
-package com.freshworks.fd.starter.todo.model;
+package com.freshworks.starter.todo.model;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

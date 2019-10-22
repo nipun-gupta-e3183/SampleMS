@@ -1,6 +1,6 @@
-package com.freshworks.fd.starter.todo.repository;
+package com.freshworks.starter.todo.repository;
 
-import com.freshworks.fd.starter.todo.model.Todo;
+import com.freshworks.starter.todo.model.Todo;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
