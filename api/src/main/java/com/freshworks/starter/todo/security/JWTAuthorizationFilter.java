@@ -2,6 +2,7 @@ package com.freshworks.starter.todo.security;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
+import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -16,7 +17,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import static com.freshworks.starter.todo.security.SecurityConstants.HEADER_STRING;
-import static com.freshworks.starter.todo.security.SecurityConstants.SECRET;
 import static com.freshworks.starter.todo.security.SecurityConstants.TOKEN_PREFIX;
 
 public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
@@ -50,13 +50,27 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
         if (token != null) {
             // parse the token.
             DecodedJWT decodedJwt = JWT.decode(token.replace(TOKEN_PREFIX, ""));
-            String user = JWT.require(Algorithm.HMAC512(securityConfig.getJwtSecret(decodedJwt.getSubject())))
-                    .build()
-                    .verify(token.replace(TOKEN_PREFIX, ""))
-                    .getSubject();
+            String[] jwtSecrets = securityConfig.getJwtSecrets(decodedJwt.getSubject());
+            if (jwtSecrets == null) {
+                return null;
+            }
+            JWTVerificationException exception = null;
+            for (String secret : jwtSecrets) {
+                try {
+                    String user = JWT.require(Algorithm.HMAC512(secret))
+                            .build()
+                            .verify(token.replace(TOKEN_PREFIX, ""))
+                            .getSubject();
 
-            if (user != null) {
-                return new UsernamePasswordAuthenticationToken(user, null, new ArrayList<>());
+                    if (user != null) {
+                        return new UsernamePasswordAuthenticationToken(user, null, new ArrayList<>());
+                    }
+                } catch (JWTVerificationException e) {
+                    exception = e;
+                }
+            }
+            if (exception != null) {
+                throw exception;
             }
             return null;
         }

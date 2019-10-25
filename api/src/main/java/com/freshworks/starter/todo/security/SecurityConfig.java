@@ -11,25 +11,21 @@ import java.util.Map;
 @EnableConfigurationProperties
 @ConfigurationProperties(prefix = "security.jwt")
 public class SecurityConfig {
-    private Map<String, String> secrets;
+    private Map<String, String[]> secrets;
 
     @Value("${security.jwt.expirationTime:864000000}")
     private long expirationTime;
 
-    public Map<String, String> getSecrets() {
+    public Map<String, String[]> getSecrets() {
         return secrets;
     }
 
-    public void setSecrets(Map<String, String> secrets) {
+    public void setSecrets(Map<String, String[]> secrets) {
         this.secrets = secrets;
     }
 
-    public byte[] getJwtSecret(String callerService) {
-        String secret = secrets.get(callerService);
-        if (secret != null) {
-            return secret.getBytes();
-        }
-        return null;
+    public String[] getJwtSecrets(String callerService) {
+        return this.secrets.get(callerService);
     }
 
     public long getExpirationTime() {

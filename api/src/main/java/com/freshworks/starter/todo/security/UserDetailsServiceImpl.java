@@ -21,7 +21,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        if (securityConfig.getJwtSecret(username) == null) {
+        if (securityConfig.getJwtSecrets(username) == null) {
             throw new UsernameNotFoundException(username);
         }
         return new User(username, bCryptPasswordEncoder.encode("some_secret"), emptyList());

@@ -8,28 +8,21 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import javax.servlet.FilterChain;
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 
-import static com.auth0.jwt.algorithms.Algorithm.HMAC512;
-
 public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
     private AuthenticationManager authenticationManager;
-    private UserDetailsService userDetailsService;
     private SecurityConfig securityConfig;
 
-    JWTAuthenticationFilter(AuthenticationManager authenticationManager, UserDetailsService userDetailsService, SecurityConfig securityConfig) {
+    JWTAuthenticationFilter(AuthenticationManager authenticationManager, SecurityConfig securityConfig) {
         this.authenticationManager = authenticationManager;
-        this.userDetailsService = userDetailsService;
         this.securityConfig = securityConfig;
     }
 
@@ -58,11 +51,15 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
                                             Authentication auth) {
 
         String callerService = ((User) auth.getPrincipal()).getUsername();
+        String[] jwtSecrets = securityConfig.getJwtSecrets(callerService);
+        if (jwtSecrets == null) {
+            throw new RuntimeException("Invalid service");
+        }
         String token = JWT.create()
                 .withSubject(callerService)
                 .withClaim("user", req.getParameter("user"))
                 .withExpiresAt(new Date(System.currentTimeMillis() + SecurityConstants.EXPIRATION_TIME))
-                .sign(Algorithm.HMAC512(securityConfig.getJwtSecret(callerService)));
+                .sign(Algorithm.HMAC512(jwtSecrets[0]));
         res.addHeader(SecurityConstants.HEADER_STRING, SecurityConstants.TOKEN_PREFIX + token);
     }
 }
