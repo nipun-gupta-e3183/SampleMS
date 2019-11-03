@@ -11,10 +11,6 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.stream.Collectors;
-
 @ControllerAdvice
 public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionHandler {
     private Logger log = LoggerFactory.getLogger(RestResponseEntityExceptionHandler.class);
@@ -25,7 +21,7 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
         log.debug("Validation error occurred", ex);
         ErrorResponse response = new ErrorResponse("validation_failed",
                 "One or more fields didn't meet the constraints",
-                Collections.singletonList(new ErrorResponse.Error(ex.getField(), ex.getErrorCode(), ex.getErrorMessage())));
+                new ErrorResponse.Error(ex.getField(), ex.getErrorCode(), ex.getErrorMessage()));
         return handleExceptionInternal(ex, response,
                 new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
     }
@@ -47,16 +43,26 @@ TODO: Handle more error scenarios
     }
 */
 
+    @ExceptionHandler(AccessDeniedException.class)
+    protected ResponseEntity<Object> handleAccessDeniedException(
+            AccessDeniedException ex, WebRequest request) {
+        log.debug("AccessDeniedException", ex);
+        ErrorResponse response = new ErrorResponse("access_denied",
+                "You don't have permission to access this resource");
+        return handleExceptionInternal(ex, response,
+                new HttpHeaders(), HttpStatus.FORBIDDEN, request);
+    }
+
     @Override
     protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex,
                                                                   HttpHeaders headers,
                                                                   HttpStatus status, WebRequest request) {
 
-        List<ErrorResponse.Error> errors = ex.getBindingResult()
+        ErrorResponse.Error[] errors = ex.getBindingResult()
                 .getFieldErrors()
                 .stream()
                 .map(x -> new ErrorResponse.Error(x.getField(), x.getCode(), x.getDefaultMessage()))
-                .collect(Collectors.toList());
+                .toArray(ErrorResponse.Error[]::new);
 
         ErrorResponse errorResponse = new ErrorResponse("validation_failed",
                 "One or more fields didn't meet the constraints",

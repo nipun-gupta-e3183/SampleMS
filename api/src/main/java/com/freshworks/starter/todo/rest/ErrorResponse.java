@@ -1,5 +1,6 @@
 package com.freshworks.starter.todo.rest;
 
+import java.util.Arrays;
 import java.util.List;
 
 public class ErrorResponse {
@@ -12,10 +13,10 @@ public class ErrorResponse {
         this.description = description;
     }
 
-    public ErrorResponse(String code, String description, List<Error> errors) {
+    public ErrorResponse(String code, String description, Error... errors) {
         this.code = code;
         this.description = description;
-        this.errors = errors;
+        this.errors = Arrays.asList(errors);
     }
 
     public String getCode() {

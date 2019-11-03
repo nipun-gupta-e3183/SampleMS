@@ -26,4 +26,9 @@ public class TodoService {
     public Todo getTodo(long todoId) {
         return todoRepository.getOne(todoId);
     }
+
+    public Todo updateTodo(Todo updateTodo) {
+        getTodo(updateTodo.getId());
+        return todoRepository.save(updateTodo);
+    }
 }

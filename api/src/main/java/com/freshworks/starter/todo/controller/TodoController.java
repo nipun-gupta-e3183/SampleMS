@@ -18,17 +18,26 @@ public class TodoController {
     }
 
     @GetMapping
-    @PreAuthorize("hasAuthority('admin')")
+    @PreAuthorize("hasAuthority('todo:list')")
     public List<Todo> listTodos() {
         return todoService.listAllTodos();
     }
 
     @PostMapping
+    @PreAuthorize("hasAuthority('todo:create')")
     public Todo addTodo(@RequestBody @Valid Todo newTodo) {
         return todoService.addTodo(newTodo);
     }
 
+    @PutMapping("/{todoId}")
+    @PreAuthorize("hasAuthority('todo:update')")
+    public Todo updateTodo(@PathVariable long todoId, @RequestBody @Valid Todo updateTodo) {
+        updateTodo.setId(todoId);
+        return todoService.updateTodo(updateTodo);
+    }
+
     @GetMapping("/{todoId}")
+    @PreAuthorize("hasAuthority('todo:get')")
     public Todo getTodo(@PathVariable long todoId) {
         return todoService.getTodo(todoId);
     }
