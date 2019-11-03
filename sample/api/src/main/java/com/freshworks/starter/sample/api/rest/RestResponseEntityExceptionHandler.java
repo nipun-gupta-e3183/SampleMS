@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+import java.util.Map;
+
 @ControllerAdvice
 public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionHandler {
     private Logger log = LoggerFactory.getLogger(RestResponseEntityExceptionHandler.class);
@@ -71,6 +73,14 @@ TODO: Handle more error scenarios
                 errors);
         return new ResponseEntity<>(errorResponse, headers, status);
 
+    }
+
+    @Override
+    protected ResponseEntity<Object> handleExceptionInternal(Exception ex, Object body, HttpHeaders headers, HttpStatus status, WebRequest request) {
+        if (!(body instanceof ErrorResponse)) {
+            body = Map.of("code", status.getReasonPhrase(), "description", status.getReasonPhrase());
+        }
+        return super.handleExceptionInternal(ex, body, headers, status, request);
     }
 
     @ExceptionHandler(NotFoundException.class)
