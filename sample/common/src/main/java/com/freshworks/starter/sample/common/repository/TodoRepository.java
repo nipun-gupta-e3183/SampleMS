@@ -1,6 +1,6 @@
-package com.freshworks.starter.sample.api.repository;
+package com.freshworks.starter.sample.common.repository;
 
-import com.freshworks.starter.sample.api.model.Todo;
+import com.freshworks.starter.sample.common.model.Todo;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

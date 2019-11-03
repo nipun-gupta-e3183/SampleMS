@@ -1,19 +1,14 @@
-package com.freshworks.starter.sample.api.model;
-
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+package com.freshworks.starter.sample.common.model;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.util.Objects;
 
 @Entity
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Table(name = "TODOS")
 public class Todo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    @NotNull
     private String title;
     private boolean completed;
 

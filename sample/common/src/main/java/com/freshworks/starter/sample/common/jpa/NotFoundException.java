@@ -1,15 +1,15 @@
-package com.freshworks.starter.sample.api.rest;
+package com.freshworks.starter.sample.common.jpa;
 
 public class NotFoundException extends RuntimeException {
     private String field;
 
     public NotFoundException(String field) {
-        super("Resource not found");
+        super("Entity not found");
         this.field = field;
     }
 
     public NotFoundException(String field, Throwable cause) {
-        super("Resource not found", cause);
+        super("Entity not found", cause);
         this.field = field;
     }
 
