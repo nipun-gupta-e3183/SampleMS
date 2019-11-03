@@ -1,4 +1,4 @@
-package com.freshworks.starter.todo.security;
+package com.freshworks.starter.sample.api.security;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;

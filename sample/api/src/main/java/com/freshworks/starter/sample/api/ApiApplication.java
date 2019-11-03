@@ -1,6 +1,6 @@
-package com.freshworks.starter.todo;
+package com.freshworks.starter.sample.api;
 
-import com.freshworks.starter.todo.security.PermissionsDecoder;
+import com.freshworks.starter.sample.api.security.PermissionsDecoder;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
@@ -12,7 +12,10 @@ import java.util.Map;
 public class ApiApplication {
 	private Map<Integer, String> PERMISSIONS_BIT_SET = Map.of(
 			1, "todo:list",
-			2, "todo:create"
+			2, "todo:get",
+			3, "todo:create",
+			4, "todo:update",
+			5, "todo:delete"
 	);
 
 	@Bean

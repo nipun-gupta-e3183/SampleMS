@@ -1,4 +1,4 @@
-package com.freshworks.starter.todo.security;
+package com.freshworks.starter.sample.api.security;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;

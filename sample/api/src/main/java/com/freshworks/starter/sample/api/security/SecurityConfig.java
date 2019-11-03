@@ -1,4 +1,4 @@
-package com.freshworks.starter.todo.security;
+package com.freshworks.starter.sample.api.security;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;

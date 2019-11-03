@@ -1,4 +1,4 @@
-package com.freshworks.starter.todo.rest;
+package com.freshworks.starter.sample.api.rest;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

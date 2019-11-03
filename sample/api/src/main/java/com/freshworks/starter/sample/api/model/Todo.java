@@ -1,4 +1,4 @@
-package com.freshworks.starter.todo.model;
+package com.freshworks.starter.sample.api.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 

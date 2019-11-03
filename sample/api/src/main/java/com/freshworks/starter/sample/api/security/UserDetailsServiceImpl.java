@@ -1,4 +1,4 @@
-package com.freshworks.starter.todo.security;
+package com.freshworks.starter.sample.api.security;
 
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;

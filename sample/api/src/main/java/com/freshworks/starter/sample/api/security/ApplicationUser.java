@@ -1,4 +1,4 @@
-package com.freshworks.starter.todo.security;
+package com.freshworks.starter.sample.api.security;
 
 public class ApplicationUser {
     private String username;

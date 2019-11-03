@@ -1,4 +1,4 @@
-package com.freshworks.starter.todo.security;
+package com.freshworks.starter.sample.api.security;
 
 interface SecurityConstants {
     long EXPIRATION_TIME = 60_000; // 1 minute

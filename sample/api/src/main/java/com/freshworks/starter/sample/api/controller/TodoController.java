@@ -1,7 +1,7 @@
-package com.freshworks.starter.todo.controller;
+package com.freshworks.starter.sample.api.controller;
 
-import com.freshworks.starter.todo.model.Todo;
-import com.freshworks.starter.todo.service.TodoService;
+import com.freshworks.starter.sample.api.model.Todo;
+import com.freshworks.starter.sample.api.service.TodoService;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 

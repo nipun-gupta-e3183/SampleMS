@@ -1,8 +1,8 @@
-package com.freshworks.starter.todo.service;
+package com.freshworks.starter.sample.api.service;
 
-import com.freshworks.starter.todo.model.Todo;
-import com.freshworks.starter.todo.repository.TodoRepository;
-import com.freshworks.starter.todo.rest.NotFoundException;
+import com.freshworks.starter.sample.api.repository.TodoRepository;
+import com.freshworks.starter.sample.api.rest.NotFoundException;
+import com.freshworks.starter.sample.api.model.Todo;
 import org.springframework.stereotype.Component;
 
 import java.util.List;

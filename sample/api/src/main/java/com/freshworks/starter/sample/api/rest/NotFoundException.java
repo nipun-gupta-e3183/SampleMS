@@ -1,4 +1,4 @@
-package com.freshworks.starter.todo.rest;
+package com.freshworks.starter.sample.api.rest;
 
 public class NotFoundException extends RuntimeException {
     private String field;

@@ -1,4 +1,4 @@
-package com.freshworks.starter.todo.rest;
+package com.freshworks.starter.sample.api.rest;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 

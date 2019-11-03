@@ -1,4 +1,4 @@
-package com.freshworks.starter.todo.security;
+package com.freshworks.starter.sample.api.security;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
@@ -21,8 +21,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static com.freshworks.starter.todo.security.SecurityConstants.HEADER_STRING;
-import static com.freshworks.starter.todo.security.SecurityConstants.TOKEN_PREFIX;
+import static com.freshworks.starter.sample.api.security.SecurityConstants.HEADER_STRING;
+import static com.freshworks.starter.sample.api.security.SecurityConstants.TOKEN_PREFIX;
 
 public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
 

@@ -1,4 +1,4 @@
-package com.freshworks.starter.todo.rest;
+package com.freshworks.starter.sample.api.rest;
 
 public class ValidationException extends RuntimeException {
     private int status;
