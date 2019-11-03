@@ -2,6 +2,7 @@ package com.freshworks.starter.todo.service;
 
 import com.freshworks.starter.todo.model.Todo;
 import com.freshworks.starter.todo.repository.TodoRepository;
+import com.freshworks.starter.todo.rest.NotFoundException;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -24,7 +25,7 @@ public class TodoService {
     }
 
     public Todo getTodo(long todoId) {
-        return todoRepository.getOne(todoId);
+        return todoRepository.findById(todoId).orElseThrow(() -> new NotFoundException("todo_id"));
     }
 
     public Todo updateTodo(Todo updateTodo) {

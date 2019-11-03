@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -69,6 +70,17 @@ TODO: Handle more error scenarios
                 errors);
         return new ResponseEntity<>(errorResponse, headers, status);
 
+    }
+
+    @ExceptionHandler(NotFoundException.class)
+    protected ResponseEntity<Object> handleNotFoundException(
+            NotFoundException ex, WebRequest request) {
+        log.debug("NotFoundException", ex);
+        ErrorResponse response = new ErrorResponse("not_found",
+                "The resource is not found",
+                new ErrorResponse.Error(ex.getField(), "not_found", "The resource is not found"));
+        return handleExceptionInternal(ex, response,
+                new HttpHeaders(), HttpStatus.NOT_FOUND, request);
     }
 
     @ExceptionHandler(Exception.class)
