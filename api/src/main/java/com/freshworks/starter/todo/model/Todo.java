@@ -1,15 +1,21 @@
 package com.freshworks.starter.todo.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.validation.constraints.NotNull;
 import java.util.Objects;
 
 @Entity
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Todo {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+    @NotNull
     private String title;
     private boolean completed;
 
@@ -47,21 +53,28 @@ public class Todo {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (!(o instanceof Todo)) return false;
+
         Todo todo = (Todo) o;
-        return completed == todo.completed &&
-                Objects.equals(title, todo.title);
+
+        if (id != todo.id) return false;
+        if (completed != todo.completed) return false;
+        return Objects.equals(title, todo.title);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(title, completed);
+        int result = (int) (id ^ (id >>> 32));
+        result = 31 * result + (title != null ? title.hashCode() : 0);
+        result = 31 * result + (completed ? 1 : 0);
+        return result;
     }
 
     @Override
     public String toString() {
         return "Todo{" +
-                "title='" + title + '\'' +
+                "id=" + id +
+                ", title='" + title + '\'' +
                 ", completed=" + completed +
                 '}';
     }

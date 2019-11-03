@@ -2,11 +2,11 @@ package com.freshworks.starter.todo.controller;
 
 import com.freshworks.starter.todo.model.Todo;
 import com.freshworks.starter.todo.service.TodoService;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
 
@@ -25,14 +25,8 @@ public class TodoController {
     }
 
     @PostMapping("/api/v1/todos")
-    public ResponseEntity<Void> addTodo(@RequestBody Todo newTodo) {
-
-        Todo todo = todoService.addTodo(newTodo);
-
-        URI location = ServletUriComponentsBuilder.fromCurrentRequest().path(
-                "/{id}").buildAndExpand(todo.getId()).toUri();
-
-        return ResponseEntity.created(location).build();
+    public Todo addTodo(@RequestBody @Valid Todo newTodo) {
+        return todoService.addTodo(newTodo);
     }
 
     @GetMapping("/api/v1/todos/{todoId}")
