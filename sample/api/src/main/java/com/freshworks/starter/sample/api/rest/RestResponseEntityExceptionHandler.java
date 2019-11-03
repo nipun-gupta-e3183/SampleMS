@@ -1,5 +1,6 @@
 package com.freshworks.starter.sample.api.rest;
 
+import com.freshworks.starter.sample.common.jpa.NotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
