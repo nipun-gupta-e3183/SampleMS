@@ -1,5 +1,7 @@
 package com.freshworks.starter.todo.rest;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+
 import java.util.Arrays;
 import java.util.List;
 
@@ -27,6 +29,7 @@ public class ErrorResponse {
         return description;
     }
 
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public List<Error> getErrors() {
         return errors;
     }
