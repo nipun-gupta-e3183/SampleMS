@@ -19,11 +19,13 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
     private UserDetailsServiceImpl userDetailsService;
     private BCryptPasswordEncoder bCryptPasswordEncoder;
     private SecurityConfig securityConfig;
+    private PermissionsDecoder permissionsDecoder;
 
-    public WebSecurity(UserDetailsServiceImpl userDetailsService, BCryptPasswordEncoder bCryptPasswordEncoder, SecurityConfig securityConfig) {
+    public WebSecurity(UserDetailsServiceImpl userDetailsService, BCryptPasswordEncoder bCryptPasswordEncoder, SecurityConfig securityConfig, PermissionsDecoder permissionsDecoder) {
         this.userDetailsService = userDetailsService;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
         this.securityConfig = securityConfig;
+        this.permissionsDecoder = permissionsDecoder;
     }
 
     @Override
@@ -33,8 +35,8 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
                 .antMatchers((HttpMethod) null, "/actuator/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
-                .addFilter(new JWTAuthenticationFilter(authenticationManager(), securityConfig))
-                .addFilter(new JWTAuthorizationFilter(authenticationManager(), securityConfig))
+//                .addFilter(new JWTAuthenticationFilter(authenticationManager(), securityConfig))
+                .addFilter(new JWTAuthorizationFilter(authenticationManager(), securityConfig, permissionsDecoder))
                 // this disables session creation on Spring Security
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
     }

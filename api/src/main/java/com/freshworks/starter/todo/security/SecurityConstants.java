@@ -1,9 +1,8 @@
 package com.freshworks.starter.todo.security;
 
-class SecurityConstants {
-    static final String SECRET = "SecretKeyToGenJWTs";
-    static final long EXPIRATION_TIME = 864_000_000; // 10 days
-    static final String TOKEN_PREFIX = "Bearer ";
-    static final String HEADER_STRING = "Authorization";
+interface SecurityConstants {
+    long EXPIRATION_TIME = 60_000; // 1 minute
+    String TOKEN_PREFIX = "Bearer ";
+    String HEADER_STRING = "Authorization";
 }
 
