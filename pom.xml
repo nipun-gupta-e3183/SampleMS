@@ -3,16 +3,13 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>com.freshworks.starter</groupId>
-	<artifactId>freshworks-starter-build</artifactId>
-	<version>${revision}</version>
+	<groupId>com.freshworks.boot</groupId>
+	<artifactId>freshworks-boot-build</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
-	<name>Freshworks starter build</name>
-	<description>Freshworks starter build</description>
-	<properties>
-		<revision>0.0.1-SNAPSHOT</revision>
-	</properties>
+	<name>Freshworks boot build</name>
+	<description>Freshworks boot build</description>
 	<modules>
-		<module>sample</module>
+		<module>samples</module>
 	</modules>
 </project>

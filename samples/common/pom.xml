@@ -8,14 +8,15 @@
         <version>2.1.9.RELEASE</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>com.freshworks.starter.sample</groupId>
+    <groupId>com.freshworks.boot.samples</groupId>
     <artifactId>common</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>${revision}</version>
     <name>common</name>
-    <description>Shared classes</description>
+    <description>Sample service classes using Freshworks boot</description>
 
     <properties>
         <java.version>11</java.version>
+        <revision>0.0.1-SNAPSHOT</revision>
     </properties>
 
     <dependencies>

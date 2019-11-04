@@ -9,7 +9,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
 
 class PermissionsDecoderTest {
-    Map<Integer, String> BIT_TO_PERMISSION_MAP = Map.of(
+    private Map<Integer, String> BIT_TO_PERMISSION_MAP = Map.of(
             2, "read",
             4, "write");
 

@@ -8,11 +8,11 @@ Setting up development environment
     
 * Run DB Migration
 
-        mvn -Dflyway.configFiles=src/main/resources/flyway.conf flyway:migrate
+        ../mvnw -Dflyway.configFiles=src/main/resources/flyway.conf flyway:migrate -pl api/
         
 * Run api server
 
-        mvn spring-boot:run
+        ../mvnw spring-boot:run -pl api/
         
 * Generate JWT token from https://jwt.io using following information
     * Secret: secret1 (for "service1" client as per application.properties)

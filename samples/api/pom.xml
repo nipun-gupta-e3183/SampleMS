@@ -8,15 +8,16 @@
 		<version>2.1.9.RELEASE</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.freshworks.starter.sample</groupId>
+	<groupId>com.freshworks.boot.samples</groupId>
 	<artifactId>api</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>${revision}</version>
 	<name>api</name>
-	<description>Sample starter project for Freshworks microservices</description>
+	<description>Sample micro-service exposing REST APIs using Freshworks boot</description>
 
 	<properties>
 		<java.version>11</java.version>
 		<spring-cloud.version>Greenwich.SR3</spring-cloud.version>
+		<revision>0.0.1-SNAPSHOT</revision>
 	</properties>
 
 	<dependencies>
@@ -106,9 +107,9 @@
 
         <!-- Freshworks dependencies -->
         <dependency>
-            <groupId>com.freshworks.starter.sample</groupId>
+            <groupId>com.freshworks.boot.samples</groupId>
             <artifactId>common</artifactId>
-            <version>${project.version}</version>
+			<version>${revision}</version>
         </dependency>
 	</dependencies>
 	<dependencyManagement>
