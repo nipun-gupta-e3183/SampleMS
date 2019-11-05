@@ -5,13 +5,10 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.freshworks.boot.samples</groupId>
 	<artifactId>freshworks-boot-samples</artifactId>
-	<version>${revision}</version>
+	<version>0.0.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<name>Freshworks boot samples</name>
 	<description>Freshworks boot samples</description>
-	<properties>
-		<revision>0.0.1-SNAPSHOT</revision>
-	</properties>
 	<modules>
 		<module>common</module>
 		<module>api</module>
