@@ -24,7 +24,7 @@ Setting up development environment
               "UserId": "123",
               "AccId": "1",
               "OrgId": "2",
-              "Permissions": "wA==",
+              "Permissions": "//8=",
               "iat": 1516239022
             }
 
@@ -32,7 +32,7 @@ Setting up development environment
 
         curl -X POST \
           http://localhost:8080/api/v1/todos \
-          -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJDbGllbnRJZCI6InNlcnZpY2UxIiwiVXNlcklkIjoiMTIzIiwiQWNjSWQiOiIxIiwiT3JnSWQiOiIyIiwiUGVybWlzc2lvbnMiOiJ3QT09IiwiaWF0IjoxNTE2MjM5MDIyfQ.YraulEuGAtt86CT-kyqtAvOb-RrZSmLmNj5rD1UpQo8' \
+          -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJDbGllbnRJZCI6InNlcnZpY2UxIiwiVXNlcklkIjoiMTIzIiwiQWNjSWQiOiIxIiwiT3JnSWQiOiIyIiwiUGVybWlzc2lvbnMiOiIvLzg9IiwiaWF0IjoxNTE2MjM5MDIyfQ.gdZo-2GQ6IUY92WmC5cHBF7g0A81GfY33N9SlVp5xRA' \
           -H 'Content-Type: application/json' \
           -d '{
         	"title": "Buy milk"
@@ -42,5 +42,5 @@ Setting up development environment
 
         curl -X GET \
           http://localhost:8080/api/v1/todos \
-          -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJDbGllbnRJZCI6InNlcnZpY2UxIiwiVXNlcklkIjoiMTIzIiwiQWNjSWQiOiIxIiwiT3JnSWQiOiIyIiwiUGVybWlzc2lvbnMiOiJ3QT09IiwiaWF0IjoxNTE2MjM5MDIyfQ.YraulEuGAtt86CT-kyqtAvOb-RrZSmLmNj5rD1UpQo8' \
+          -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJDbGllbnRJZCI6InNlcnZpY2UxIiwiVXNlcklkIjoiMTIzIiwiQWNjSWQiOiIxIiwiT3JnSWQiOiIyIiwiUGVybWlzc2lvbnMiOiIvLzg9IiwiaWF0IjoxNTE2MjM5MDIyfQ.gdZo-2GQ6IUY92WmC5cHBF7g0A81GfY33N9SlVp5xRA' \
           -H 'Content-Type: application/json'

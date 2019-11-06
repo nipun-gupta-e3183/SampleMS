@@ -3,19 +3,21 @@ package com.freshworks.starter.sample.api.security;
 import org.junit.jupiter.api.Test;
 
 import java.util.Base64;
+import java.util.BitSet;
 import java.util.Map;
 
+import static java.util.stream.IntStream.range;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
 
 class PermissionsDecoderTest {
-    private Map<Integer, String> BIT_TO_PERMISSION_MAP = Map.of(
+    private Map<Integer, String> INDEX_TO_PERMISSION_MAP = Map.of(
             2, "read",
             4, "write");
 
     @Test
     void decode_InvalidString_ExceptionThrown() {
-        PermissionsDecoder permissionsDecoder = new PermissionsDecoder(BIT_TO_PERMISSION_MAP);
+        PermissionsDecoder permissionsDecoder = new PermissionsDecoder(INDEX_TO_PERMISSION_MAP);
 
         Throwable exception = catchThrowable(() -> permissionsDecoder.decode("invalid_base64_string"));
 
@@ -24,7 +26,7 @@ class PermissionsDecoderTest {
 
     @Test
     void decode_NoPermissions_ReturnsEmptyList() {
-        PermissionsDecoder permissionsDecoder = new PermissionsDecoder(BIT_TO_PERMISSION_MAP);
+        PermissionsDecoder permissionsDecoder = new PermissionsDecoder(INDEX_TO_PERMISSION_MAP);
         String permissionsString = Base64.getEncoder().encodeToString(new byte[]{(byte) 0b00000000});
 
         String[] permissions = permissionsDecoder.decode(permissionsString);
@@ -33,7 +35,7 @@ class PermissionsDecoderTest {
     }
     @Test
     void decode_EmptyInput_ThrowsInvalidArgumentException() {
-        PermissionsDecoder permissionsDecoder = new PermissionsDecoder(BIT_TO_PERMISSION_MAP);
+        PermissionsDecoder permissionsDecoder = new PermissionsDecoder(INDEX_TO_PERMISSION_MAP);
 
         Throwable ex = catchThrowable(() -> permissionsDecoder.decode(""));
 
@@ -41,8 +43,8 @@ class PermissionsDecoderTest {
     }
     @Test
     void decode_PermissionsEnabledInOneByte_ReturnedInPermissionsList() {
-        PermissionsDecoder permissionsDecoder = new PermissionsDecoder(BIT_TO_PERMISSION_MAP);
-        String permissionsString = Base64.getEncoder().encodeToString(new byte[]{(byte) 0b01010000});
+        PermissionsDecoder permissionsDecoder = new PermissionsDecoder(INDEX_TO_PERMISSION_MAP);
+        String permissionsString = getPermissionsString(2, 4);
 
         String[] permissions = permissionsDecoder.decode(permissionsString);
 
@@ -51,8 +53,8 @@ class PermissionsDecoderTest {
 
     @Test
     void decode_PermissionsNotEnabled_NotIncludedInPermissionsList() {
-        PermissionsDecoder permissionsDecoder = new PermissionsDecoder(BIT_TO_PERMISSION_MAP);
-        String permissionsString = Base64.getEncoder().encodeToString(new byte[]{(byte) 0b10111111});
+        PermissionsDecoder permissionsDecoder = new PermissionsDecoder(INDEX_TO_PERMISSION_MAP);
+        String permissionsString = getPermissionsString(0, 1, 3, 4, 5, 6, 7);
 
         String[] permissions = permissionsDecoder.decode(permissionsString);
 
@@ -62,7 +64,7 @@ class PermissionsDecoderTest {
     @Test
     void decode_PermissionsAcrossMultipleBytes_ReturnedInPermissionsList() {
         PermissionsDecoder permissionsDecoder = new PermissionsDecoder(Map.of(2, "read", 4, "write", 9, "admin"));
-        String permissionsString = Base64.getEncoder().encodeToString(new byte[]{(byte) 0b01000000, (byte) 0b10000000});
+        String permissionsString = getPermissionsString(2, 9);
 
         String[] permissions = permissionsDecoder.decode(permissionsString);
 
@@ -71,20 +73,19 @@ class PermissionsDecoderTest {
 
     @Test
     void encode_EmptyPermissions_ReturnsValue() {
-        PermissionsDecoder permissionsDecoder = new PermissionsDecoder(BIT_TO_PERMISSION_MAP);
+        PermissionsDecoder permissionsDecoder = new PermissionsDecoder(INDEX_TO_PERMISSION_MAP);
 
         String permissionsStr = permissionsDecoder.encode();
 
-        assertThat(permissionsStr).isEqualTo("AA==");
+        assertThat(permissionsStr).isEqualTo(getPermissionsString());
     }
     @Test
     void encode_IndexesLessThan8_EncodedInOneByte() {
-        PermissionsDecoder permissionsDecoder = new PermissionsDecoder(BIT_TO_PERMISSION_MAP);
+        PermissionsDecoder permissionsDecoder = new PermissionsDecoder(INDEX_TO_PERMISSION_MAP);
 
         String permissionsStr = permissionsDecoder.encode("read", "write");
 
-        String expectedStr = Base64.getEncoder().encodeToString(new byte[]{(byte) 0b01010000});
-        assertThat(permissionsStr).isEqualTo(expectedStr);
+        assertThat(permissionsStr).isEqualTo(getPermissionsString(2, 4));
     }
     @Test
     void encode_IndexesMoreThan8_EncodedInMultipleBytes() {
@@ -92,7 +93,19 @@ class PermissionsDecoderTest {
 
         String permissionsStr = permissionsDecoder.encode("read", "admin");
 
-        String expectedStr = Base64.getEncoder().encodeToString(new byte[]{(byte) 0b01000000, (byte) 0b10000000});
-        assertThat(permissionsStr).isEqualTo(expectedStr);
+        assertThat(permissionsStr).isEqualTo(getPermissionsString(2, 9));
     }
+    @Test
+    void encode_IndexesMoreThan8a_EncodedInMultipleBytes() {
+        System.out.println(getPermissionsString(range(0, 16).toArray()));
+    }
+
+    private String getPermissionsString(int... indexes) {
+        BitSet bitSet = new BitSet();
+        for (int index : indexes) {
+            bitSet.set(index);
+        }
+        return Base64.getEncoder().encodeToString(bitSet.toByteArray());
+    }
+
 }
