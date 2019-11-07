@@ -51,11 +51,6 @@
 			<optional>true</optional>
 		</dependency>
 		<dependency>
-			<groupId>com.auth0</groupId>
-			<artifactId>java-jwt</artifactId>
-			<version>3.8.3</version>
-		</dependency>
-		<dependency>
 			<groupId>javax.xml.bind</groupId>
 			<artifactId>jaxb-api</artifactId>
 			<version>2.3.1</version>
@@ -105,6 +100,11 @@
 		</dependency>
 
         <!-- Freshworks dependencies -->
+        <dependency>
+            <groupId>com.freshworks.boot</groupId>
+            <artifactId>freshworks-boot-web-security</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+        </dependency>
         <dependency>
             <groupId>com.freshworks.boot.samples</groupId>
             <artifactId>common</artifactId>

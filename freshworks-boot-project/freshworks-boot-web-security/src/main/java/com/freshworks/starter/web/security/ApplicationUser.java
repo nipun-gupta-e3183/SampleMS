@@ -1,4 +1,4 @@
-package com.freshworks.starter.sample.api.security;
+package com.freshworks.starter.web.security;
 
 public class ApplicationUser {
     private String username;

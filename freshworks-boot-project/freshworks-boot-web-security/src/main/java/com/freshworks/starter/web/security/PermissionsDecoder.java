@@ -1,4 +1,4 @@
-package com.freshworks.starter.sample.api.security;
+package com.freshworks.starter.web.security;
 
 import java.util.*;
 import java.util.stream.Collectors;

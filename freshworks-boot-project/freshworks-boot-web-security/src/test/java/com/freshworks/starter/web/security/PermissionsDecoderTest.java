@@ -1,4 +1,4 @@
-package com.freshworks.starter.sample.api.security;
+package com.freshworks.starter.web.security;
 
 import org.junit.jupiter.api.Test;
 
@@ -6,7 +6,6 @@ import java.util.Base64;
 import java.util.BitSet;
 import java.util.Map;
 
-import static java.util.stream.IntStream.range;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
 
@@ -33,6 +32,7 @@ class PermissionsDecoderTest {
 
         assertThat(permissions).isEmpty();
     }
+
     @Test
     void decode_EmptyInput_ThrowsInvalidArgumentException() {
         PermissionsDecoder permissionsDecoder = new PermissionsDecoder(INDEX_TO_PERMISSION_MAP);
@@ -41,6 +41,7 @@ class PermissionsDecoderTest {
 
         assertThat(ex).isInstanceOf(IllegalArgumentException.class);
     }
+
     @Test
     void decode_PermissionsEnabledInOneByte_ReturnedInPermissionsList() {
         PermissionsDecoder permissionsDecoder = new PermissionsDecoder(INDEX_TO_PERMISSION_MAP);
@@ -79,6 +80,7 @@ class PermissionsDecoderTest {
 
         assertThat(permissionsStr).isEqualTo(getPermissionsString());
     }
+
     @Test
     void encode_IndexesLessThan8_EncodedInOneByte() {
         PermissionsDecoder permissionsDecoder = new PermissionsDecoder(INDEX_TO_PERMISSION_MAP);
@@ -87,6 +89,7 @@ class PermissionsDecoderTest {
 
         assertThat(permissionsStr).isEqualTo(getPermissionsString(2, 4));
     }
+
     @Test
     void encode_IndexesMoreThan8_EncodedInMultipleBytes() {
         PermissionsDecoder permissionsDecoder = new PermissionsDecoder(Map.of(2, "read", 4, "write", 9, "admin"));
@@ -94,10 +97,6 @@ class PermissionsDecoderTest {
         String permissionsStr = permissionsDecoder.encode("read", "admin");
 
         assertThat(permissionsStr).isEqualTo(getPermissionsString(2, 9));
-    }
-    @Test
-    void encode_IndexesMoreThan8a_EncodedInMultipleBytes() {
-        System.out.println(getPermissionsString(range(0, 16).toArray()));
     }
 
     private String getPermissionsString(int... indexes) {
