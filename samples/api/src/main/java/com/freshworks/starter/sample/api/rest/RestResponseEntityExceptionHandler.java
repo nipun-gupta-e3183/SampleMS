@@ -52,7 +52,7 @@ TODO: Handle more error scenarios
             AccessDeniedException ex, WebRequest request) {
         log.debug("AccessDeniedException", ex);
         ErrorResponse response = new ErrorResponse("access_denied",
-                "You don't have permission to access this resource");
+                "You don't have the required permissions to access this resource");
         return handleExceptionInternal(ex, response,
                 new HttpHeaders(), HttpStatus.FORBIDDEN, request);
     }

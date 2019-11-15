@@ -1,20 +1,18 @@
 package com.freshworks.starter.sample.api;
 
-import com.freshworks.starter.web.security.PermissionsDecoder;
 import com.freshworks.starter.sample.common.model.Todo;
 import com.freshworks.starter.sample.common.repository.TodoRepository;
+import com.freshworks.starter.web.security.PermissionsDecoder;
 import org.modelmapper.ModelMapper;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.util.Map;
 
-//TODO: Include dependent packages scanning via auto configuration
-@SpringBootApplication(scanBasePackages = {"com.freshworks.starter.web.security", "com.freshworks.starter.sample.common", "com.freshworks.starter.sample.api"})
+@SpringBootApplication(scanBasePackages = {"com.freshworks.starter.sample"})
 @EntityScan(basePackageClasses = Todo.class)
 @EnableJpaRepositories(basePackageClasses = TodoRepository.class)
 public class ApiApplication {
@@ -25,11 +23,6 @@ public class ApiApplication {
             4, "todo:update",
             5, "todo:delete"
     );
-
-    @Bean
-    public BCryptPasswordEncoder bCryptPasswordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
 
     @Bean
     public PermissionsDecoder permissionsDecoder() {

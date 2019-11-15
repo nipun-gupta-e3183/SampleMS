@@ -1,4 +1,4 @@
-package com.freshworks.starter.sample.api.api;
+package com.freshworks.starter.sample.api;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
