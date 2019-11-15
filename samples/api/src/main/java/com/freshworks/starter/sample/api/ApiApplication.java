@@ -10,23 +10,25 @@ import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
+import java.io.IOException;
 import java.util.Map;
+import java.util.Properties;
+import java.util.stream.Collectors;
 
 @SpringBootApplication(scanBasePackages = {"com.freshworks.starter.sample"})
 @EntityScan(basePackageClasses = Todo.class)
 @EnableJpaRepositories(basePackageClasses = TodoRepository.class)
 public class ApiApplication {
-    private Map<Integer, String> PERMISSIONS_BIT_SET = Map.of(
-            1, "todo:list",
-            2, "todo:get",
-            3, "todo:create",
-            4, "todo:update",
-            5, "todo:delete"
-    );
-
     @Bean
     public PermissionsDecoder permissionsDecoder() {
-        return new PermissionsDecoder(PERMISSIONS_BIT_SET);
+        Properties permissions = new Properties();
+        try {
+            permissions.load(getClass().getResourceAsStream("/permissions.properties"));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        Map<Integer, String> indexToPermissionsMap = permissions.entrySet().stream().collect(Collectors.toMap(e -> Integer.parseInt((String) e.getKey()), e -> (String) e.getValue()));
+        return new PermissionsDecoder(indexToPermissionsMap);
     }
 
     @Bean
