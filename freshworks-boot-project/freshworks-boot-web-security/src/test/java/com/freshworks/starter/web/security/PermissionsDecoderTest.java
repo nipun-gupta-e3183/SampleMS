@@ -2,8 +2,8 @@ package com.freshworks.starter.web.security;
 
 import org.junit.jupiter.api.Test;
 
-import java.util.Base64;
-import java.util.BitSet;
+import java.math.BigInteger;
+import java.util.Arrays;
 import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -15,7 +15,7 @@ class PermissionsDecoderTest {
             4, "write");
 
     @Test
-    void decode_InvalidString_ExceptionThrown() {
+    void decode_InvalidString_ThrowsException() {
         PermissionsDecoder permissionsDecoder = new PermissionsDecoder(INDEX_TO_PERMISSION_MAP);
 
         Throwable exception = catchThrowable(() -> permissionsDecoder.decode("invalid_base64_string"));
@@ -26,7 +26,7 @@ class PermissionsDecoderTest {
     @Test
     void decode_NoPermissions_ReturnsEmptyList() {
         PermissionsDecoder permissionsDecoder = new PermissionsDecoder(INDEX_TO_PERMISSION_MAP);
-        String permissionsString = Base64.getEncoder().encodeToString(new byte[]{(byte) 0b00000000});
+        String permissionsString = "0";
 
         String[] permissions = permissionsDecoder.decode(permissionsString);
 
@@ -73,38 +73,25 @@ class PermissionsDecoderTest {
     }
 
     @Test
-    void encode_EmptyPermissions_ReturnsValue() {
-        PermissionsDecoder permissionsDecoder = new PermissionsDecoder(INDEX_TO_PERMISSION_MAP);
+    void decode_PermissionInBigIndex_ReturnedInPermissionsList() {
+        PermissionsDecoder permissionsDecoder = new PermissionsDecoder(Map.of(2, "read", 4, "write", 1000, "super-admin"));
+        String permissionsString = getPermissionsString(2, 1000);
 
-        String permissionsStr = permissionsDecoder.encode();
+        String[] permissions = permissionsDecoder.decode(permissionsString);
 
-        assertThat(permissionsStr).isEqualTo(getPermissionsString());
+        assertThat(permissions).containsExactlyInAnyOrder("read", "super-admin").doesNotContain("write");
     }
 
-    @Test
-    void encode_IndexesLessThan8_EncodedInOneByte() {
-        PermissionsDecoder permissionsDecoder = new PermissionsDecoder(INDEX_TO_PERMISSION_MAP);
-
-        String permissionsStr = permissionsDecoder.encode("read", "write");
-
-        assertThat(permissionsStr).isEqualTo(getPermissionsString(2, 4));
-    }
-
-    @Test
-    void encode_IndexesMoreThan8_EncodedInMultipleBytes() {
-        PermissionsDecoder permissionsDecoder = new PermissionsDecoder(Map.of(2, "read", 4, "write", 9, "admin"));
-
-        String permissionsStr = permissionsDecoder.encode("read", "admin");
-
-        assertThat(permissionsStr).isEqualTo(getPermissionsString(2, 9));
-    }
-
-    private String getPermissionsString(int... indexes) {
-        BitSet bitSet = new BitSet();
-        for (int index : indexes) {
-            bitSet.set(index);
+    static String getPermissionsString(int... indexes) {
+        if (indexes.length == 0) {
+            return "0";
         }
-        return Base64.getEncoder().encodeToString(bitSet.toByteArray());
+        Arrays.sort(indexes);
+        StringBuilder builder = new StringBuilder();
+        for (int i = indexes[indexes.length-1]; i >= 0; i--) {
+            builder.append(Arrays.binarySearch(indexes, i) >= 0 ? '1' : '0');
+        }
+        return new BigInteger(builder.toString(), 2).toString();
     }
 
 }

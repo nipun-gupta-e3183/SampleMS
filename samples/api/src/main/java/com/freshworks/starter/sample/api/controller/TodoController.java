@@ -23,28 +23,28 @@ public class TodoController {
     }
 
     @GetMapping
-    @PreAuthorize("hasAuthority('todo:list')")
+    @PreAuthorize("hasAuthority('/todo/list')")
     public List<TodoDto> listTodos() {
         List<Todo> todos = todoService.listAllTodos();
         return todos.stream().map(this::convertToDto).collect(Collectors.toList());
     }
 
     @PostMapping
-    @PreAuthorize("hasAuthority('todo:create')")
+    @PreAuthorize("hasAuthority('/todo/create')")
     public TodoDto addTodo(@RequestBody @Valid TodoDto newTodoDto) {
         Todo todo = convertToEntity(newTodoDto);
         return convertToDto(todoService.addTodo(todo));
     }
 
     @PutMapping("/{todoId}")
-    @PreAuthorize("hasAuthority('todo:update')")
+    @PreAuthorize("hasAuthority('/todo/update')")
     public TodoDto updateTodo(@PathVariable long todoId, @RequestBody @Valid TodoDto updateTodoDto) {
         updateTodoDto.setId(todoId);
         return convertToDto(todoService.updateTodo(convertToEntity(updateTodoDto)));
     }
 
     @GetMapping("/{todoId}")
-    @PreAuthorize("hasAuthority('todo:get')")
+    @PreAuthorize("hasAuthority('/todo/get')")
     public TodoDto getTodo(@PathVariable long todoId) {
         return convertToDto(todoService.getTodo(todoId));
     }

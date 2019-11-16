@@ -1,6 +1,12 @@
 package com.freshworks.starter.web.security;
 
-import java.util.*;
+import java.io.IOException;
+import java.io.InputStream;
+import java.math.BigInteger;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Properties;
 import java.util.stream.Collectors;
 
 public class PermissionsDecoder {
@@ -11,30 +17,30 @@ public class PermissionsDecoder {
         this.indexToPermissionMap = indexToPermissionMap;
     }
 
-    public String[] decode(String input) {
-        if ("".equals(input)) {
-            throw new IllegalArgumentException("Permissions string can't be empty");
+    public PermissionsDecoder(InputStream permissionsInputStream) {
+        this.indexToPermissionMap = loadPermissionsFromStream(permissionsInputStream);
+    }
+
+    static Map<Integer, String> loadPermissionsFromStream(InputStream permissionsInputStream) {
+        Properties permissions = new Properties();
+        try {
+            permissions.load(permissionsInputStream);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
-        BitSet permissionsBitSet = BitSet.valueOf(Base64.getDecoder().decode(input));
+        return permissions.entrySet().stream()
+                .collect(Collectors.toMap(e -> Integer.parseInt((String) e.getKey()), e -> (String) e.getValue()));
+    }
+
+    public String[] decode(String input) {
+        BigInteger permissionsBits = new BigInteger(input);
         List<String> permissions = new ArrayList<>();
         for (Map.Entry<Integer, String> entry : indexToPermissionMap.entrySet()) {
-            if (permissionsBitSet.get(entry.getKey())) {
+            if (permissionsBits.testBit(entry.getKey())) {
                 permissions.add(entry.getValue());
             }
         }
         return permissions.toArray(new String[0]);
     }
 
-    public String encode(String... permissions) {
-        Map<String, Integer> permissionToBitMap = invert(indexToPermissionMap);
-        BitSet permissionsBitSet = new BitSet();
-        for (String permission : permissions) {
-            permissionsBitSet.set(permissionToBitMap.get(permission));
-        }
-        return Base64.getEncoder().encodeToString(permissionsBitSet.toByteArray());
-    }
-
-    private Map<String, Integer> invert(Map<Integer, String> bitToPermissionMap) {
-        return bitToPermissionMap.entrySet().stream().collect(Collectors.toMap(Map.Entry::getValue, Map.Entry::getKey));
-    }
 }
