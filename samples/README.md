@@ -12,7 +12,7 @@ Setting up development environment
         
 * Run api server
 
-        ../mvnw spring-boot:run -pl api/
+        spring_profiles_active=dev ../mvnw spring-boot:run -pl api/
         
 * Generate JWT token from https://jwt.io using following information
     * Secret: secret1 (for "service1" client as per application.properties)
@@ -44,3 +44,9 @@ Setting up development environment
           http://localhost:8080/api/v1/todos \
           -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJDbGllbnRJZCI6InNlcnZpY2UxIiwiVXNlcklkIjoiMTIzIiwiQWNjSWQiOiIxIiwiT3JnSWQiOiIyIiwiUGVybWlzc2lvbnMiOiIzMSIsImlhdCI6MTUxNjIzOTAyMn0._8riHr0rVqZmdcTmiI8bEm6lgi3tTjuGLN4OnySIq0c' \
           -H 'Content-Type: application/json'
+
+Useful commands
+===============
+* Build with tests
+
+        spring_profiles_active=dev ../mvnw clean build

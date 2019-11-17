@@ -3,15 +3,14 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.1.9.RELEASE</version>
-        <relativePath/> <!-- lookup parent from repository -->
+        <groupId>com.freshworks.boot</groupId>
+        <artifactId>freshworks-boot-parent</artifactId>
+        <version>0.0.1-SNAPSHOT</version>
+        <relativePath>../freshworks-boot-parent</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <name>Freshworks Boot Web Security</name>
     <description>Freshworks Boot Web Security</description>
-    <groupId>com.freshworks.boot</groupId>
     <artifactId>freshworks-boot-web-security</artifactId>
     <version>0.0.1-SNAPSHOT</version>
 
@@ -27,7 +26,6 @@
         <dependency>
             <groupId>com.auth0</groupId>
             <artifactId>java-jwt</artifactId>
-            <version>3.8.3</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -37,17 +35,10 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
-            <exclusions>
-                <exclusion>
-                    <groupId>junit</groupId>
-                    <artifactId>junit</artifactId>
-                </exclusion>
-            </exclusions>
         </dependency>
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter</artifactId>
-            <version>5.5.2</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
