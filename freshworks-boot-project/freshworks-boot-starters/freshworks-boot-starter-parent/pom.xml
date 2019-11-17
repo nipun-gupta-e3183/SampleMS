@@ -4,19 +4,18 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
         <groupId>com.freshworks.boot</groupId>
-        <artifactId>freshworks-boot-project</artifactId>
+        <artifactId>freshworks-boot-dependencies</artifactId>
         <version>0.0.1-SNAPSHOT</version>
+        <relativePath>../../freshworks-boot-dependencies</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>freshworks-boot-starters</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <artifactId>freshworks-boot-starter-parent</artifactId>
     <packaging>pom</packaging>
-    <name>Freshworks Boot Starters</name>
-    <description>Freshworks Boot Starters</description>
-
-    <modules>
-        <module>freshworks-boot-starter-parent</module>
-    </modules>
+    <name>Freshworks Boot Starter Parent</name>
+    <description>Freshworks Boot Starter Parent</description>
+    <properties>
+        <java.version>11</java.version>
+    </properties>
 
 </project>

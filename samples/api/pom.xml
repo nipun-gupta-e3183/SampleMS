@@ -3,10 +3,15 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
-		<groupId>org.springframework.boot</groupId>
-		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.1.9.RELEASE</version>
-		<relativePath/> <!-- lookup parent from repository -->
+		<groupId>com.freshworks.boot</groupId>
+		<artifactId>freshworks-boot-starter-parent</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+		<!--
+        Note: In actual projects, please replace this to empty relativePath element, so that the parent is
+        looked up from repository
+        -->
+		<relativePath>../../freshworks-boot-project/freshworks-boot-starters/freshworks-boot-starter-parent
+		</relativePath>
 	</parent>
 	<groupId>com.freshworks.boot.samples</groupId>
 	<artifactId>api</artifactId>
@@ -16,7 +21,6 @@
 
 	<properties>
 		<java.version>11</java.version>
-		<spring-cloud.version>Greenwich.SR3</spring-cloud.version>
 	</properties>
 
 	<dependencies>
@@ -111,17 +115,6 @@
 			<version>0.0.1-SNAPSHOT</version>
         </dependency>
 	</dependencies>
-	<dependencyManagement>
-		<dependencies>
-			<dependency>
-				<groupId>org.springframework.cloud</groupId>
-				<artifactId>spring-cloud-dependencies</artifactId>
-				<version>${spring-cloud.version}</version>
-				<type>pom</type>
-				<scope>import</scope>
-			</dependency>
-		</dependencies>
-	</dependencyManagement>
 
 	<build>
 		<plugins>
