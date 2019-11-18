@@ -12,15 +12,14 @@ Setting up development environment
         
 * Run api server
 
-        spring_profiles_active=dev ../mvnw spring-boot:run -pl api/
+        ../mvnw spring-boot:run -pl api/
         
-* Generate JWT token from https://jwt.io using following information
+* Generate JWT token from https://jwt.io using following information (sample https://jwt.io/#debugger-io?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySWQiOiIxMjMiLCJBY2NJZCI6IjEiLCJPcmdJZCI6IjIiLCJQZXJtaXNzaW9ucyI6IjMxIiwiaWF0IjoxNTE2MjM5MDIyfQ.9O8FQyoBW69VIQseQdKX-RVosaqEVKQ6lZvB1IjffAk)
     * Secret: secret1 (for "service1" client as per application.properties)
     * Algorithm: HS256
     * Payload
 
             {
-              "ClientId": "service1",
               "UserId": "123",
               "AccId": "1",
               "OrgId": "2",
@@ -32,8 +31,9 @@ Setting up development environment
 
         curl -X POST \
           http://localhost:8080/api/v1/todos \
-          -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJDbGllbnRJZCI6InNlcnZpY2UxIiwiVXNlcklkIjoiMTIzIiwiQWNjSWQiOiIxIiwiT3JnSWQiOiIyIiwiUGVybWlzc2lvbnMiOiIzMSIsImlhdCI6MTUxNjIzOTAyMn0._8riHr0rVqZmdcTmiI8bEm6lgi3tTjuGLN4OnySIq0c' \
+          -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySWQiOiIxMjMiLCJBY2NJZCI6IjEiLCJPcmdJZCI6IjIiLCJQZXJtaXNzaW9ucyI6IjMxIiwiaWF0IjoxNTE2MjM5MDIyfQ.9O8FQyoBW69VIQseQdKX-RVosaqEVKQ6lZvB1IjffAk' \
           -H 'Content-Type: application/json' \
+          -H 'X-Client-ID: service1' \
           -d '{
         	"title": "Buy milk"
         }'
@@ -42,7 +42,8 @@ Setting up development environment
 
         curl -X GET \
           http://localhost:8080/api/v1/todos \
-          -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJDbGllbnRJZCI6InNlcnZpY2UxIiwiVXNlcklkIjoiMTIzIiwiQWNjSWQiOiIxIiwiT3JnSWQiOiIyIiwiUGVybWlzc2lvbnMiOiIzMSIsImlhdCI6MTUxNjIzOTAyMn0._8riHr0rVqZmdcTmiI8bEm6lgi3tTjuGLN4OnySIq0c' \
+          -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySWQiOiIxMjMiLCJBY2NJZCI6IjEiLCJPcmdJZCI6IjIiLCJQZXJtaXNzaW9ucyI6IjMxIiwiaWF0IjoxNTE2MjM5MDIyfQ.9O8FQyoBW69VIQseQdKX-RVosaqEVKQ6lZvB1IjffAk' \
+          -H 'X-Client-ID: service1' \
           -H 'Content-Type: application/json'
 
 Useful commands

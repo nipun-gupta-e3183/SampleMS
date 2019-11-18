@@ -29,6 +29,7 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
     private SecurityConfig securityConfig;
     private final PermissionsDecoder permissionsDecoder;
 
+    @SuppressWarnings("WeakerAccess")
     public JWTAuthorizationFilter(AuthenticationManager authManager, SecurityConfig securityConfig, PermissionsDecoder permissionsDecoder) {
         super(authManager);
         this.securityConfig = securityConfig;
@@ -53,10 +54,11 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
     }
 
     private UsernamePasswordAuthenticationToken getAuthentication(HttpServletRequest request) {
+        String clientId = request.getHeader("X-Client-ID");
         String token = request.getHeader(HEADER_STRING);
-        if (token != null) {
+        if (clientId == null || token != null) {
             String jwtTokenStr = token.replace(TOKEN_PREFIX, "");
-            String[] jwtSecrets = securityConfig.getJwtSecrets(getClaim(JWT.decode(jwtTokenStr), "ClientId"));
+            String[] jwtSecrets = securityConfig.getJwtSecrets(clientId);
             if (jwtSecrets == null) {
                 return null;
             }
@@ -64,14 +66,13 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
             for (String secret : jwtSecrets) {
                 try {
                     DecodedJWT decodedJwt = JWT.require(Algorithm.HMAC256(secret)).build().verify(jwtTokenStr);
-                    String clientId = getClaim(decodedJwt, "ClientId");
                     String userId = getClaim(decodedJwt, "UserId");
                     String accountId = getClaim(decodedJwt, "AccId");
                     String orgId = getClaim(decodedJwt, "OrgId");
                     String permissionsStr = getClaim(decodedJwt, "Permissions");
                     String[] permissions = permissionsDecoder.decode(permissionsStr);
                     List<GrantedAuthority> grantedAuthorities = Arrays.stream(permissions).map(SimpleGrantedAuthority::new).collect(Collectors.toList());
-                    FWUserDetails FWUserDetails = new FWUserDetails(userId, clientId, accountId, orgId, grantedAuthorities);
+                    FWUserDetails FWUserDetails = new FWUserDetails(userId, accountId, orgId, grantedAuthorities);
                     return new UsernamePasswordAuthenticationToken(FWUserDetails, null, grantedAuthorities);
                 } catch (JWTVerificationException e) {
                     exception = e;

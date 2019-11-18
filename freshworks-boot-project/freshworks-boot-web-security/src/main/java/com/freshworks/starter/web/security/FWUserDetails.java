@@ -7,24 +7,19 @@ import java.util.List;
 
 public class FWUserDetails extends User {
     private final String userId;
-    private final String clientId;
     private final String accountId;
     private final String orgId;
 
-    public FWUserDetails(String userId, String clientId, String accountId, String orgId, List<GrantedAuthority> grantedAuthorities) {
+    @SuppressWarnings("WeakerAccess")
+    public FWUserDetails(String userId, String accountId, String orgId, List<GrantedAuthority> grantedAuthorities) {
         super(userId, "dummy", grantedAuthorities);
         this.userId = userId;
-        this.clientId = clientId;
         this.accountId = accountId;
         this.orgId = orgId;
     }
 
     public String getUserId() {
         return userId;
-    }
-
-    public String getClientId() {
-        return clientId;
     }
 
     public String getAccountId() {
@@ -39,7 +34,6 @@ public class FWUserDetails extends User {
     public String toString() {
         return "FWUserDetails{" +
                 "userId='" + userId + '\'' +
-                ", clientId='" + clientId + '\'' +
                 ", accountId='" + accountId + '\'' +
                 ", orgId='" + orgId + '\'' +
                 "} " + super.toString();
