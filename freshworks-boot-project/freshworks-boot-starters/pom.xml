@@ -17,6 +17,8 @@
 
     <modules>
         <module>freshworks-boot-starter-parent</module>
+        <module>freshworks-boot-starter-api</module>
+        <module>freshworks-boot-starter-api-test</module>
     </modules>
 
 </project>

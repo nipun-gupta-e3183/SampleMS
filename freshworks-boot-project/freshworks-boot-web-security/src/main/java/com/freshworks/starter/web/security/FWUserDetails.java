@@ -18,14 +18,17 @@ public class FWUserDetails extends User {
         this.orgId = orgId;
     }
 
+    @SuppressWarnings("unused")
     public String getUserId() {
         return userId;
     }
 
+    @SuppressWarnings("unused")
     public String getAccountId() {
         return accountId;
     }
 
+    @SuppressWarnings("unused")
     public String getOrgId() {
         return orgId;
     }
