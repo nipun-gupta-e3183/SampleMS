@@ -18,8 +18,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 public class WebSecurityAutoConfiguration {
     @Bean
     @ConditionalOnMissingBean
-    public UserDetailsService userDetailsService(BCryptPasswordEncoder bCryptPasswordEncoder, SecurityConfig securityConfig) {
-        return new UserDetailsServiceImpl(bCryptPasswordEncoder, securityConfig);
+    public UserDetailsService userDetailsService(BCryptPasswordEncoder bCryptPasswordEncoder) {
+        return new UserDetailsServiceImpl(bCryptPasswordEncoder);
     }
 
     @Bean

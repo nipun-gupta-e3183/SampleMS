@@ -1,6 +1,5 @@
 package com.freshworks.starter.web.security;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
@@ -11,25 +10,18 @@ import java.util.Map;
 @EnableConfigurationProperties
 @ConfigurationProperties(prefix = "security.jwt")
 public class SecurityConfig {
-    private Map<String, String[]> secrets;
+    private Map<String, String> authzPublicKeys;
 
-    @Value("${security.jwt.expirationTime:864000000}")
-    private long expirationTime;
-
-    public Map<String, String[]> getSecrets() {
-        return secrets;
+    public Map<String, String> getAuthzPublicKeys() {
+        return authzPublicKeys;
     }
 
-    public void setSecrets(Map<String, String[]> secrets) {
-        this.secrets = secrets;
+    public void setAuthzPublicKeys(Map<String, String> authzPublicKeys) {
+        this.authzPublicKeys = authzPublicKeys;
     }
 
-    public String[] getJwtSecrets(String callerService) {
-        return this.secrets.get(callerService);
-    }
-
-    public long getExpirationTime() {
-        return expirationTime;
+    public String getPublicKey(String kid) {
+        return this.authzPublicKeys.get(kid);
     }
 
 }

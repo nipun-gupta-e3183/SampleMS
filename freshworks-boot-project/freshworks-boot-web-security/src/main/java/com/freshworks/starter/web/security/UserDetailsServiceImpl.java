@@ -12,18 +12,14 @@ import static java.util.Collections.emptyList;
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
     private BCryptPasswordEncoder bCryptPasswordEncoder;
-    private SecurityConfig securityConfig;
 
-    public UserDetailsServiceImpl(BCryptPasswordEncoder bCryptPasswordEncoder, SecurityConfig securityConfig) {
+    @SuppressWarnings("WeakerAccess")
+    public UserDetailsServiceImpl(BCryptPasswordEncoder bCryptPasswordEncoder) {
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
-        this.securityConfig = securityConfig;
     }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        if (securityConfig.getJwtSecrets(username) == null) {
-            throw new UsernameNotFoundException(username);
-        }
         return new User(username, bCryptPasswordEncoder.encode("some_secret"), emptyList());
     }
 }

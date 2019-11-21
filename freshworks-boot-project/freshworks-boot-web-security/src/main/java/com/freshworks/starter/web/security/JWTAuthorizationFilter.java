@@ -5,6 +5,9 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.Claim;
 import com.auth0.jwt.interfaces.DecodedJWT;
+import org.bouncycastle.jce.provider.BouncyCastleProvider;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
@@ -17,8 +20,13 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.List;
+import java.security.KeyFactory;
+import java.security.NoSuchAlgorithmException;
+import java.security.PublicKey;
+import java.security.interfaces.RSAPublicKey;
+import java.security.spec.InvalidKeySpecException;
+import java.security.spec.X509EncodedKeySpec;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static com.freshworks.starter.web.security.SecurityConstants.HEADER_STRING;
@@ -26,14 +34,22 @@ import static com.freshworks.starter.web.security.SecurityConstants.TOKEN_PREFIX
 
 public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
 
-    private SecurityConfig securityConfig;
+    private Logger log = LoggerFactory.getLogger(JWTAuthorizationFilter.class);
     private final PermissionsDecoder permissionsDecoder;
+    private Map<String, Algorithm> algorithms = new HashMap<>();
 
     @SuppressWarnings("WeakerAccess")
     public JWTAuthorizationFilter(AuthenticationManager authManager, SecurityConfig securityConfig, PermissionsDecoder permissionsDecoder) {
         super(authManager);
-        this.securityConfig = securityConfig;
         this.permissionsDecoder = permissionsDecoder;
+        try {
+            for (Map.Entry<String, String> publicKeyEntry : securityConfig.getAuthzPublicKeys().entrySet()) {
+                PublicKey publicKey = getPublicKey(publicKeyEntry.getValue());
+                algorithms.put(publicKeyEntry.getKey(), Algorithm.RSA256((RSAPublicKey) publicKey, null));
+            }
+        } catch (NoSuchAlgorithmException | InvalidKeySpecException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
@@ -58,30 +74,26 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
         String token = request.getHeader(HEADER_STRING);
         if (clientId == null || token != null) {
             String jwtTokenStr = token.replace(TOKEN_PREFIX, "");
-            String[] jwtSecrets = securityConfig.getJwtSecrets(clientId);
-            if (jwtSecrets == null) {
+            DecodedJWT decodedJWT = JWT.decode(jwtTokenStr);
+            Claim kid = decodedJWT.getHeaderClaim("kid");
+            if (!algorithms.containsKey(kid.asString())) {
+                log.debug("JWT token doesn't have a valid kid: {}", kid.asString());
                 return null;
             }
-            JWTVerificationException exception = null;
-            for (String secret : jwtSecrets) {
-                try {
-                    DecodedJWT decodedJwt = JWT.require(Algorithm.HMAC256(secret)).build().verify(jwtTokenStr);
-                    String userId = getClaim(decodedJwt, "UserId");
-                    String accountId = getClaim(decodedJwt, "AccId");
-                    String orgId = getClaim(decodedJwt, "OrgId");
-                    String permissionsStr = getClaim(decodedJwt, "Permissions");
-                    String[] permissions = permissionsDecoder.decode(permissionsStr);
-                    List<GrantedAuthority> grantedAuthorities = Arrays.stream(permissions).map(SimpleGrantedAuthority::new).collect(Collectors.toList());
-                    FWUserDetails FWUserDetails = new FWUserDetails(userId, accountId, orgId, grantedAuthorities);
-                    return new UsernamePasswordAuthenticationToken(FWUserDetails, null, grantedAuthorities);
-                } catch (JWTVerificationException e) {
-                    exception = e;
-                }
+            try {
+                DecodedJWT decodedJwt = JWT.require(algorithms.get(kid.asString())).build().verify(jwtTokenStr);
+                String userId = getClaim(decodedJwt, "UserId");
+                String accountId = getClaim(decodedJwt, "AccId");
+                String orgId = getClaim(decodedJwt, "OrgId");
+                String permissionsStr = getClaim(decodedJwt, "Permissions");
+                String[] permissions = permissionsDecoder.decode(permissionsStr);
+                List<GrantedAuthority> grantedAuthorities = Arrays.stream(permissions).map(SimpleGrantedAuthority::new).collect(Collectors.toList());
+                FWUserDetails FWUserDetails = new FWUserDetails(userId, accountId, orgId, grantedAuthorities);
+                return new UsernamePasswordAuthenticationToken(FWUserDetails, null, grantedAuthorities);
+            } catch (JWTVerificationException e) {
+                log.debug("Exception occurred while verifying JWT token", e);
+                return null;
             }
-            if (exception != null) {
-                throw exception;
-            }
-            return null;
         }
         return null;
     }
@@ -92,5 +104,12 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
             return null;
         }
         return claim.asString();
+    }
+
+    private PublicKey getPublicKey(String key) throws NoSuchAlgorithmException, InvalidKeySpecException {
+        KeyFactory kFactory = KeyFactory.getInstance("RSA", new BouncyCastleProvider());
+        byte[] pubKeyBytes = Base64.getDecoder().decode(key);
+        X509EncodedKeySpec spec = new X509EncodedKeySpec(pubKeyBytes);
+        return kFactory.generatePublic(spec);
     }
 }
