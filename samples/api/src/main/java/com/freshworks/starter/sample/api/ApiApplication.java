@@ -10,7 +10,7 @@ import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
-@SpringBootApplication(scanBasePackages = {"com.freshworks.starter.sample"})
+@SpringBootApplication(scanBasePackages = {"com.freshworks.starter.sample", "com.freshworks.boot.rest"})
 @EntityScan(basePackageClasses = Todo.class)
 @EnableJpaRepositories(basePackageClasses = TodoRepository.class)
 public class ApiApplication {

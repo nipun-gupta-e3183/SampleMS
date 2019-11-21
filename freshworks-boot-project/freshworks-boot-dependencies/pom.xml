@@ -77,6 +77,23 @@
                 <version>2.3.0</version>
             </dependency>
             <dependency>
+                <groupId>org.bouncycastle</groupId>
+                <artifactId>bcprov-jdk15on</artifactId>
+                <version>1.60</version>
+            </dependency>
+
+            <!-- Boot project dependencies -->
+            <dependency>
+                <groupId>com.freshworks.boot</groupId>
+                <artifactId>freshworks-boot-common</artifactId>
+                <version>0.0.1-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>com.freshworks.boot</groupId>
+                <artifactId>freshworks-boot-rest</artifactId>
+                <version>0.0.1-SNAPSHOT</version>
+            </dependency>
+            <dependency>
                 <groupId>com.freshworks.boot</groupId>
                 <artifactId>freshworks-boot-web-security</artifactId>
                 <version>0.0.1-SNAPSHOT</version>
@@ -91,11 +108,6 @@
                 <artifactId>freshworks-boot-starter-api-test</artifactId>
                 <version>0.0.1-SNAPSHOT</version>
                 <scope>test</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.bouncycastle</groupId>
-                <artifactId>bcprov-jdk15on</artifactId>
-                <version>1.60</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

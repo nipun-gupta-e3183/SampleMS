@@ -1,6 +1,6 @@
-package com.freshworks.starter.sample.api.rest;
+package com.freshworks.boot.rest;
 
-import com.freshworks.starter.sample.common.jpa.NotFoundException;
+import com.freshworks.boot.common.persistence.NotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;

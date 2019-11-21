@@ -1,8 +1,8 @@
 package com.freshworks.starter.sample.common.service;
 
-import com.freshworks.starter.sample.common.repository.TodoRepository;
-import com.freshworks.starter.sample.common.jpa.NotFoundException;
+import com.freshworks.boot.common.persistence.NotFoundException;
 import com.freshworks.starter.sample.common.model.Todo;
+import com.freshworks.starter.sample.common.repository.TodoRepository;
 import org.springframework.stereotype.Component;
 
 import java.util.List;

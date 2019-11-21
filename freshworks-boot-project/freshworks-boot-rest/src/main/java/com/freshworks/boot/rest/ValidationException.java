@@ -1,5 +1,6 @@
-package com.freshworks.starter.sample.api.rest;
+package com.freshworks.boot.rest;
 
+@SuppressWarnings("WeakerAccess")
 public class ValidationException extends RuntimeException {
     private int status;
     private String errorCode;

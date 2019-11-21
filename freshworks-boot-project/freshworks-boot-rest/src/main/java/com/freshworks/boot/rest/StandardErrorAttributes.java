@@ -1,14 +1,17 @@
-package com.freshworks.starter.sample.api.rest;
+package com.freshworks.boot.rest;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.web.servlet.error.DefaultErrorAttributes;
+import org.springframework.core.Ordered;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.WebRequest;
 
 import java.util.Map;
 
 @Component
+@Order(Ordered.HIGHEST_PRECEDENCE)
 public class StandardErrorAttributes extends DefaultErrorAttributes {
     private Logger log = LoggerFactory.getLogger(StandardErrorAttributes.class);
     private static final Map<Integer, String[]> STATUS_TO_ERROR_MAP = Map.ofEntries(
@@ -18,8 +21,6 @@ public class StandardErrorAttributes extends DefaultErrorAttributes {
 
     @Override
     public Map<String, Object> getErrorAttributes(WebRequest webRequest, boolean includeStackTrace) {
-
-        // Let Spring handle the error first, we will modify later :)
         Map<String, Object> errorAttributes = super.getErrorAttributes(webRequest, includeStackTrace);
         log.error("Some unhandled exception occurred: {}", errorAttributes);
         Integer status = (Integer) errorAttributes.get("status");

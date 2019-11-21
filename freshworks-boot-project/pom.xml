@@ -13,7 +13,9 @@
 	<description>Freshworks Boot Project</description>
 	<modules>
         <module>freshworks-boot-dependencies</module>
+        <module>freshworks-boot-common</module>
         <module>freshworks-boot-web-security</module>
+        <module>freshworks-boot-rest</module>
 		<module>freshworks-boot-parent</module>
         <module>freshworks-boot-starters</module>
 	</modules>

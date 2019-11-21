@@ -48,6 +48,10 @@
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.freshworks.boot</groupId>
+            <artifactId>freshworks-boot-common</artifactId>
+        </dependency>
     </dependencies>
 
 </project>

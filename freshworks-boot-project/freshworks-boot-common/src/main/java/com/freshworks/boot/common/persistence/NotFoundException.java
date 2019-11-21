@@ -1,4 +1,4 @@
-package com.freshworks.starter.sample.common.jpa;
+package com.freshworks.boot.common.persistence;
 
 public class NotFoundException extends RuntimeException {
     private String field;
