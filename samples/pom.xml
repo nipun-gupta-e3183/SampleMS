@@ -10,6 +10,7 @@
 	<name>Freshworks boot samples</name>
 	<description>Freshworks boot samples</description>
 	<modules>
+		<module>db</module>
 		<module>common</module>
 		<module>api</module>
 		<module>sqs-processor</module>

@@ -14,50 +14,25 @@
 		</relativePath>
 	</parent>
 	<groupId>com.freshworks.boot.samples</groupId>
-	<artifactId>api</artifactId>
+	<artifactId>db</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>Sample REST API</name>
-	<description>Sample micro-service exposing REST APIs using Freshworks boot</description>
+	<name>Sample DB Migration</name>
+	<description>Sample DB Migration</description>
 
 	<properties>
 		<java.version>11</java.version>
 	</properties>
 
 	<dependencies>
-        <dependency>
-            <groupId>com.freshworks.boot</groupId>
-            <artifactId>freshworks-boot-starter-api</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.freshworks.boot</groupId>
-            <artifactId>freshworks-boot-starter-api-test</artifactId>
-			<scope>test</scope>
-        </dependency>
 		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-data-jpa</artifactId>
+			<groupId>org.flywaydb</groupId>
+			<artifactId>flyway-core</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
 			<scope>runtime</scope>
 		</dependency>
-
-        <!-- Intra-project dependencies -->
-        <dependency>
-            <groupId>com.freshworks.boot.samples</groupId>
-            <artifactId>common</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
-        </dependency>
 	</dependencies>
-
-	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
-			</plugin>
-		</plugins>
-	</build>
 
 </project>
