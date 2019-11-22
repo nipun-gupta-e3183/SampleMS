@@ -14,37 +14,46 @@
 		</relativePath>
 	</parent>
 	<groupId>com.freshworks.boot.samples</groupId>
-	<artifactId>api</artifactId>
+	<artifactId>sqs-processor</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>Sample REST API</name>
-	<description>Sample micro-service exposing REST APIs using Freshworks boot</description>
+	<name>Sample SQS Processor</name>
+	<description>Sample SQS Processor</description>
 
 	<properties>
 		<java.version>11</java.version>
 	</properties>
 
 	<dependencies>
-        <dependency>
-            <groupId>com.freshworks.boot</groupId>
-            <artifactId>freshworks-boot-starter-api</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.freshworks.boot</groupId>
-            <artifactId>freshworks-boot-starter-api-test</artifactId>
-			<scope>test</scope>
-        </dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-devtools</artifactId>
+			<scope>runtime</scope>
+			<optional>true</optional>
+		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>org.flywaydb</groupId>
-			<artifactId>flyway-core</artifactId>
-		</dependency>
-		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
 			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-aws-autoconfigure</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-aws-messaging</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.modelmapper</groupId>
+			<artifactId>modelmapper</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.hibernate.validator</groupId>
+			<artifactId>hibernate-validator</artifactId>
 		</dependency>
 
         <!-- Intra-project dependencies -->

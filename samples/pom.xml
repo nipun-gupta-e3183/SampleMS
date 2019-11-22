@@ -12,5 +12,6 @@
 	<modules>
 		<module>common</module>
 		<module>api</module>
+		<module>sqs-processor</module>
 	</modules>
 </project>
