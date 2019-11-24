@@ -2,7 +2,6 @@ package com.freshworks.starter.sample.sqs_processor;
 
 import com.freshworks.starter.sample.common.model.Todo;
 import com.freshworks.starter.sample.common.repository.TodoRepository;
-import org.modelmapper.ModelMapper;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
@@ -18,11 +17,6 @@ import java.util.Collections;
 @EntityScan(basePackageClasses = Todo.class)
 @EnableJpaRepositories(basePackageClasses = TodoRepository.class)
 public class SqsProcessorApplication {
-    //TODO: Move this dependency into SQS starter module
-    @Bean
-    public ModelMapper modelMapper() {
-        return new ModelMapper();
-    }
 
     //TODO: Move this dependency into SQS starter module
     @Bean

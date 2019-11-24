@@ -1,16 +1,17 @@
 package com.freshworks.boot.rest;
 
-import org.modelmapper.ModelMapper;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.boot.autoconfigure.condition.SearchStrategy;
+import org.springframework.boot.web.servlet.error.ErrorAttributes;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
+import org.springframework.core.Ordered;
+import org.springframework.core.annotation.Order;
 
-@Configuration
+//@Configuration
 //@Order(Ordered.HIGHEST_PRECEDENCE)
 public class RestAutoConfiguration {
-//TODO: When configured with AutoConfiguration, ErrorAttributes is picked from ErrorMvcAutoConfiguration.
-// To circumvent this issue, currently the api application has to include this package in scan package.
-/*
+    //TODO: When configured with AutoConfiguration, ErrorAttributes is picked from ErrorMvcAutoConfiguration.
+    // To circumvent this issue, currently the api application has to include this package in scan package.
     @Bean
     public RestResponseEntityExceptionHandler restResponseEntityExceptionHandler() {
         return new RestResponseEntityExceptionHandler();
@@ -22,11 +23,5 @@ public class RestAutoConfiguration {
     public ErrorAttributes standardErrorAttributes() {
         return new StandardErrorAttributes();
     }
-*/
 
-    @ConditionalOnMissingBean(ModelMapper.class)
-    @Bean
-    public ModelMapper modelMapper() {
-        return new ModelMapper();
-    }
 }

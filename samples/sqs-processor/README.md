@@ -16,7 +16,7 @@ Setting up development environment
         
 * Add a todo by posting it in SQS
 
-        $ aws --endpoint-url=http://127.0.0.1:4576/ sqs send-message --queue-url http://localhost:4567/queue/todos --message-body '{"title": "some title"}'
+        $ aws --endpoint-url=http://127.0.0.1:4576/ sqs send-message --queue-url http://localhost:4567/queue/todos --message-body '{"title": "Inserted via SQS"}'
 
 Useful commands
 ===============

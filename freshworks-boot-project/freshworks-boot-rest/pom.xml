@@ -32,10 +32,6 @@
             <groupId>com.freshworks.boot</groupId>
             <artifactId>freshworks-boot-common</artifactId>
         </dependency>
-        <dependency>
-            <groupId>org.modelmapper</groupId>
-            <artifactId>modelmapper</artifactId>
-        </dependency>
     </dependencies>
 
 </project>
