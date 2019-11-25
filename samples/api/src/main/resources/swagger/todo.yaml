@@ -1,0 +1,129 @@
+openapi: "3.0.0"
+info:
+  title: Todo API
+  version: 1.0.0
+tags:
+  - name: "todo"
+    description: "Todo items"
+servers:
+  - url: http://localhost:8080/api/v1
+    description: "localhost"
+paths:
+  /todos:
+    get:
+      tags:
+        - todo
+      operationId: listTodos
+      summary: List Todo items
+      responses:
+        '200':
+          description: |-
+            Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TodoListResponse'
+    post:
+      tags:
+        - todo
+      operationId: addTodo
+      summary: Add a new Todo item
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TodoCreate'
+      responses:
+        '200':
+          description: |-
+            Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Todo'
+  /todos/{id}:
+    get:
+      tags:
+        - todo
+      operationId: getTodo
+      summary: Get a Todo item
+      responses:
+        '200':
+          description: |-
+            Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Todo'
+    put:
+      tags:
+        - todo
+      operationId: updateTodo
+      summary: Update a Todo item
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TodoCreate'
+      responses:
+        '200':
+          description: |-
+            Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Todo'
+    delete:
+      tags:
+        - todo
+      operationId: deleteTodo
+      summary: Delete a Todo item
+      responses:
+        '204':
+          description: |-
+            Success
+components:
+  schemas:
+    Todo:
+      type: "object"
+      required:
+        - "id"
+        - "title"
+        - "completed"
+      properties:
+        id:
+          type: "integer"
+          format: "int64"
+        title:
+          type: "string"
+          example: "Buy milk"
+        completed:
+          type: "boolean"
+          example: false
+    TodoListResponse:
+      type: "object"
+      properties:
+        todos:
+          type: "array"
+          items:
+            $ref: '#/components/schemas/Todo'
+        meta:
+          type: "object"
+          properties:
+            count:
+              type: "integer"
+#            previous:
+#              type: "string"
+#            next:
+#              type: "string"
+    TodoCreate:
+      type: "object"
+      required:
+        - "title"
+      properties:
+        title:
+          type: "string"
+          example: "Buy milk"
+        completed:
+          type: "boolean"
+          example: false

@@ -32,4 +32,12 @@ public class TodoService {
         getTodo(updateTodo.getId());
         return todoRepository.save(updateTodo);
     }
+
+    public void deleteTodo(long todoId) {
+        Todo todo = getTodo(todoId);
+        if (todo == null) {
+            throw new NotFoundException("todo_id");
+        }
+        todoRepository.delete(todo);
+    }
 }
