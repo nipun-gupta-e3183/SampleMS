@@ -8,7 +8,7 @@ Setting up development environment
     
 * Run DB Migration
 
-        ../mvnw -Dflyway.configFiles=src/main/resources/flyway.conf flyway:migrate -pl db/
+        ../mvnw flyway:migrate -pl db/
         
 * For running API server, please refer [API readme](./api/README.md).
 * For running SQS message processor, please refer [SQS Processor readme](./sqs-processor/README.md).
