@@ -9,6 +9,7 @@
         <!--
         Note: In actual projects, please replace this to empty relativePath element, so that the parent is
         looked up from repository
+        <relativePath/>
         -->
         <relativePath>../../freshworks-boot-project/freshworks-boot-starters/freshworks-boot-starter-parent
         </relativePath>
@@ -108,8 +109,12 @@
                             <goal>generate</goal>
                         </goals>
                         <configuration>
-                            <inputSpec>./src/main/resources/swagger/todo.yaml</inputSpec>
+                            <inputSpec>${basedir}/src/main/resources/swagger/todo.yaml</inputSpec>
+                            <!-- TODO: the DTOs shouldn't be checked-in. Figure out the solution for
+                                    including the generated directory in source set in IntelliJ &
+                                    replace this line with the next -->
                             <output>${basedir}</output>
+                            <!-- <output>${project.build.directory}/generated-sources/swagger</output>-->
                             <language>java</language>
                             <modelPackage>com.freshworks.starter.sample.api.v1.dto</modelPackage>
                             <generateApis>false</generateApis>

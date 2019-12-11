@@ -21,75 +21,72 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import javax.validation.constraints.*;
 import javax.validation.Valid;
 /**
- * TodoDto
+ * ErrorErrorsDto
  */
 
 @javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen", date = "2019-11-26T11:52:20.617018+05:30[Asia/Kolkata]")
-public class TodoDto {
-  @JsonProperty("id")
-  private Long id = null;
+public class ErrorErrorsDto {
+  @JsonProperty("field")
+  private String field = null;
 
-  @JsonProperty("title")
-  private String title = null;
+  @JsonProperty("code")
+  private String code = null;
 
-  @JsonProperty("completed")
-  private Boolean completed = null;
+  @JsonProperty("description")
+  private String description = null;
 
-  public TodoDto id(Long id) {
-    this.id = id;
+  public ErrorErrorsDto field(String field) {
+    this.field = field;
     return this;
   }
 
    /**
-   * Get id
-   * @return id
+   * Get field
+   * @return field
   **/
-  @NotNull
-  @Schema(required = true, description = "")
-  public Long getId() {
-    return id;
+  @Schema(description = "")
+  public String getField() {
+    return field;
   }
 
-  public void setId(Long id) {
-    this.id = id;
+  public void setField(String field) {
+    this.field = field;
   }
 
-  public TodoDto title(String title) {
-    this.title = title;
+  public ErrorErrorsDto code(String code) {
+    this.code = code;
     return this;
   }
 
    /**
-   * Get title
-   * @return title
+   * Get code
+   * @return code
   **/
-  @NotNull
-  @Schema(example = "Buy milk", required = true, description = "")
-  public String getTitle() {
-    return title;
+  @Schema(description = "")
+  public String getCode() {
+    return code;
   }
 
-  public void setTitle(String title) {
-    this.title = title;
+  public void setCode(String code) {
+    this.code = code;
   }
 
-  public TodoDto completed(Boolean completed) {
-    this.completed = completed;
+  public ErrorErrorsDto description(String description) {
+    this.description = description;
     return this;
   }
 
    /**
-   * Get completed
-   * @return completed
+   * Get description
+   * @return description
   **/
-  @NotNull
-  @Schema(example = "false", required = true, description = "")
-  public Boolean isCompleted() {
-    return completed;
+  @Schema(description = "")
+  public String getDescription() {
+    return description;
   }
 
-  public void setCompleted(Boolean completed) {
-    this.completed = completed;
+  public void setDescription(String description) {
+    this.description = description;
   }
 
 
@@ -101,26 +98,26 @@ public class TodoDto {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    TodoDto todo = (TodoDto) o;
-    return Objects.equals(this.id, todo.id) &&
-        Objects.equals(this.title, todo.title) &&
-        Objects.equals(this.completed, todo.completed);
+    ErrorErrorsDto errorErrors = (ErrorErrorsDto) o;
+    return Objects.equals(this.field, errorErrors.field) &&
+        Objects.equals(this.code, errorErrors.code) &&
+        Objects.equals(this.description, errorErrors.description);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, title, completed);
+    return Objects.hash(field, code, description);
   }
 
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class TodoDto {\n");
+    sb.append("class ErrorErrorsDto {\n");
     
-    sb.append("    id: ").append(toIndentedString(id)).append("\n");
-    sb.append("    title: ").append(toIndentedString(title)).append("\n");
-    sb.append("    completed: ").append(toIndentedString(completed)).append("\n");
+    sb.append("    field: ").append(toIndentedString(field)).append("\n");
+    sb.append("    code: ").append(toIndentedString(code)).append("\n");
+    sb.append("    description: ").append(toIndentedString(description)).append("\n");
     sb.append("}");
     return sb.toString();
   }
