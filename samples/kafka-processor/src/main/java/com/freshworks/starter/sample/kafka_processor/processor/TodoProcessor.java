@@ -16,7 +16,7 @@ public class TodoProcessor {
         this.todoMapper = todoMapper;
     }
 
-    @KafkaListener(topics = "todos", groupId = "sample-kafka-processor", containerFactory = "kafkaListenerContainerFactory")
+    @KafkaListener(topics = "${kafka.topics}", groupId = "${kafka.consumerGroupId}", containerFactory = "kafkaListenerContainerFactory")
     public void process(TodoDto todoDto) {
         todoService.addTodo(todoMapper.convert(todoDto));
     }
