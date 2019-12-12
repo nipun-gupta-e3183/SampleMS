@@ -25,6 +25,11 @@
         <springfox.version>2.9.2</springfox.version>
         <swagger-annotations.version>2.0.9</swagger-annotations.version>
         <swagger-jaxrs2.version>2.1.0</swagger-jaxrs2.version>
+        <jaxb-api.version>2.3.1</jaxb-api.version>
+        <jackson-databind.version>2.10.0</jackson-databind.version>
+        <spring-security-oauth2.version>2.0.14.RELEASE</spring-security-oauth2.version>
+        <bouncycastle.version>1.60</bouncycastle.version>
+        <freshworks-boot.version>0.0.1-SNAPSHOT</freshworks-boot.version>
     </properties>
     <dependencyManagement>
         <dependencies>
@@ -70,7 +75,12 @@
             <dependency>
                 <groupId>javax.xml.bind</groupId>
                 <artifactId>jaxb-api</artifactId>
-                <version>2.3.1</version>
+                <version>${jaxb-api.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-databind</artifactId>
+                <version>${jackson-databind.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.projectlombok</groupId>
@@ -80,7 +90,7 @@
             <dependency>
                 <groupId>org.springframework.security.oauth</groupId>
                 <artifactId>spring-security-oauth2</artifactId>
-                <version>2.0.14.RELEASE</version>
+                <version>${spring-security-oauth2.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.mapstruct</groupId>
@@ -90,7 +100,7 @@
             <dependency>
                 <groupId>org.bouncycastle</groupId>
                 <artifactId>bcprov-jdk15on</artifactId>
-                <version>1.60</version>
+                <version>${bouncycastle.version}</version>
             </dependency>
             <dependency>
                 <groupId>io.swagger.codegen.v3</groupId>
@@ -117,27 +127,27 @@
             <dependency>
                 <groupId>com.freshworks.boot</groupId>
                 <artifactId>freshworks-boot-common</artifactId>
-                <version>0.0.1-SNAPSHOT</version>
+                <version>${freshworks-boot.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.freshworks.boot</groupId>
                 <artifactId>freshworks-boot-rest</artifactId>
-                <version>0.0.1-SNAPSHOT</version>
+                <version>${freshworks-boot.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.freshworks.boot</groupId>
                 <artifactId>freshworks-boot-web-security</artifactId>
-                <version>0.0.1-SNAPSHOT</version>
+                <version>${freshworks-boot.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.freshworks.boot</groupId>
                 <artifactId>freshworks-boot-starter-api</artifactId>
-                <version>0.0.1-SNAPSHOT</version>
+                <version>${freshworks-boot.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.freshworks.boot</groupId>
                 <artifactId>freshworks-boot-starter-api-test</artifactId>
-                <version>0.0.1-SNAPSHOT</version>
+                <version>${freshworks-boot.version}</version>
                 <scope>test</scope>
             </dependency>
         </dependencies>

@@ -14,5 +14,6 @@
 		<module>common</module>
 		<module>api</module>
 		<module>sqs-processor</module>
+		<module>kafka-processor</module>
 	</modules>
 </project>
