@@ -12,19 +12,15 @@
 
 package com.freshworks.starter.sample.api.v1.dto;
 
-import java.util.Objects;
-import java.util.Arrays;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonValue;
 import io.swagger.v3.oas.annotations.media.Schema;
-import javax.validation.constraints.*;
-import javax.validation.Valid;
+
+import java.util.Objects;
 /**
  * ErrorErrorsDto
  */
 
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen", date = "2019-11-26T11:52:20.617018+05:30[Asia/Kolkata]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen", date = "2019-12-16T16:06:56.680618+05:30[Asia/Kolkata]")
 public class ErrorErrorsDto {
   @JsonProperty("field")
   private String field = null;

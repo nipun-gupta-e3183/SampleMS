@@ -12,39 +12,35 @@
 
 package com.freshworks.starter.sample.api.v1.dto;
 
-import java.util.Objects;
-import java.util.Arrays;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonValue;
 import io.swagger.v3.oas.annotations.media.Schema;
-import javax.validation.constraints.*;
-import javax.validation.Valid;
+
+import java.util.Objects;
 /**
  * TodoListResponseMetaDto
  */
 
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen", date = "2019-11-26T11:52:20.617018+05:30[Asia/Kolkata]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen", date = "2019-12-16T16:06:56.680618+05:30[Asia/Kolkata]")
 public class TodoListResponseMetaDto {
-  @JsonProperty("count")
-  private Integer count = null;
+  @JsonProperty("total_items")
+  private Long totalItems = null;
 
-  public TodoListResponseMetaDto count(Integer count) {
-    this.count = count;
+  public TodoListResponseMetaDto totalItems(Long totalItems) {
+    this.totalItems = totalItems;
     return this;
   }
 
    /**
-   * Get count
-   * @return count
+   * Total Items
+   * @return totalItems
   **/
-  @Schema(description = "")
-  public Integer getCount() {
-    return count;
+  @Schema(example = "100", description = "Total Items")
+  public Long getTotalItems() {
+    return totalItems;
   }
 
-  public void setCount(Integer count) {
-    this.count = count;
+  public void setTotalItems(Long totalItems) {
+    this.totalItems = totalItems;
   }
 
 
@@ -57,12 +53,12 @@ public class TodoListResponseMetaDto {
       return false;
     }
     TodoListResponseMetaDto todoListResponseMeta = (TodoListResponseMetaDto) o;
-    return Objects.equals(this.count, todoListResponseMeta.count);
+    return Objects.equals(this.totalItems, todoListResponseMeta.totalItems);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(count);
+    return Objects.hash(totalItems);
   }
 
 
@@ -71,7 +67,7 @@ public class TodoListResponseMetaDto {
     StringBuilder sb = new StringBuilder();
     sb.append("class TodoListResponseMetaDto {\n");
     
-    sb.append("    count: ").append(toIndentedString(count)).append("\n");
+    sb.append("    totalItems: ").append(toIndentedString(totalItems)).append("\n");
     sb.append("}");
     return sb.toString();
   }

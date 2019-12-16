@@ -31,7 +31,7 @@ public class TodoController {
         List<Todo> todos = todoService.listAllTodos();
         return new TodoListResponseDto().todos(todoMapper.convert(todos))
                 .meta(new TodoListResponseMetaDto()
-                        .count(todos.size()));
+                        .totalItems((long) todos.size()));
     }
 
     @PostMapping
