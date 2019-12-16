@@ -1,9 +1,9 @@
 FROM maven:3-jdk-11 as builder
 ENV BUILD_ROOT /build
 ENV JAR_FILE api-0.0.1-SNAPSHOT.jar
-ADD .. $BUILD_ROOT
+ADD . $BUILD_ROOT
 WORKDIR $BUILD_ROOT
-RUN mvn -DskipTests install -pl api
+RUN mvn -DskipTests install
 
 FROM openjdk:11-jdk
 ENV APP_ROOT /api
