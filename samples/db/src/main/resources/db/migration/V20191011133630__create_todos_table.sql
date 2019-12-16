@@ -1,4 +1,4 @@
-create table TODOS (
+create table todos (
     ID bigint not null auto_increment,
     TITLE varchar(255) not null,
     COMPLETED tinyint(1),
