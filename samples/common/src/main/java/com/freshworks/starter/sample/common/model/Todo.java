@@ -15,7 +15,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 public class Todo {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "native")
     private long id;
     private String title;
     private boolean completed;
