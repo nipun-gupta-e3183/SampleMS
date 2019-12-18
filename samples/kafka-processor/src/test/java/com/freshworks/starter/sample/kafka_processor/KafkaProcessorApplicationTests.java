@@ -1,4 +1,4 @@
-package com.freshworks.starter.sample.sqs_processor;
+package com.freshworks.starter.sample.kafka_processor;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

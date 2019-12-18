@@ -24,7 +24,7 @@ import javax.validation.Valid;
  * TodoDto
  */
 
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen", date = "2019-12-16T16:06:56.680618+05:30[Asia/Kolkata]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen", date = "2019-12-18T10:46:53.992845+05:30[Asia/Kolkata]")
 public class TodoDto {
   @JsonProperty("id")
   private Long id = null;

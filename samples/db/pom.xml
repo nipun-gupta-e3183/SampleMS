@@ -3,14 +3,11 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>com.freshworks.boot</groupId>
-        <artifactId>freshworks-boot-starter-parent</artifactId>
-        <version>0.0.1-SNAPSHOT</version>
-        <relativePath/>
+        <groupId>com.freshworks.boot.samples</groupId>
+        <artifactId>freshworks-boot-samples</artifactId>
+        <version>${revision}${changelist}</version>
     </parent>
-    <groupId>com.freshworks.boot.samples</groupId>
     <artifactId>db</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
     <name>Sample DB Migration</name>
     <description>Sample DB Migration</description>
 
