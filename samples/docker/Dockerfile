@@ -1,14 +1,22 @@
 FROM maven:3-jdk-11 as builder
 ENV BUILD_ROOT /build
-ENV JAR_FILE api-0.0.1-SNAPSHOT.jar
-ADD . $BUILD_ROOT
+ENV JAR_FILE api-1.0.0-SNAPSHOT.jar
+COPY ./docker/mvnsettings.xml /root/.m2/settings.xml
 WORKDIR $BUILD_ROOT
+COPY ./pom.xml $BUILD_ROOT/
+COPY ./api/pom.xml $BUILD_ROOT/api/
+COPY ./kafka-processor/pom.xml $BUILD_ROOT/kafka-processor/
+COPY ./sqs-processor/pom.xml $BUILD_ROOT/sqs-processor/
+RUN mvn -B clean install -DskipTests -Dcheckstyle.skip -Dasciidoctor.skip -Djacoco.skip -Dmaven.gitcommitid.skip -Dspring-boot.repackage.skip -Dmaven.exec.skip=true -Dmaven.install.skip -Dmaven.resources.skip  -Dcodegen.skip --fail-never
+COPY . $BUILD_ROOT
 RUN mvn -DskipTests install
 
 FROM openjdk:11-jdk
 ENV APP_ROOT /api
-ENV JAR_FILE api-0.0.1-SNAPSHOT.jar
+ENV BUILD_ROOT /build
 WORKDIR $APP_ROOT
-COPY --from=builder $BUILD_ROOT/api/target/$JAR_FILE $APP_ROOT
-ENTRYPOINT [ "sh", "-c", "java -jar $JAR_FILE" ]
-EXPOSE 8080
+COPY --from=builder $BUILD_ROOT/api/target/api-*.jar $APP_ROOT/
+COPY --from=builder $BUILD_ROOT/kafka-processor/target/kafka-processor-*.jar $APP_ROOT/
+COPY --from=builder $BUILD_ROOT/sqs-processor/target/sqs-processor-*.jar $APP_ROOT/
+#ENTRYPOINT [ "sh", "-c", "java -jar $JAR_FILE" ]
+#EXPOSE 8080
