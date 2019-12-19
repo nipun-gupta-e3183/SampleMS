@@ -1,6 +1,5 @@
 FROM maven:3-jdk-11 as builder
 ENV BUILD_ROOT /build
-ENV JAR_FILE api-1.0.0-SNAPSHOT.jar
 COPY ./docker/mvnsettings.xml /root/.m2/settings.xml
 WORKDIR $BUILD_ROOT
 COPY ./pom.xml $BUILD_ROOT/
@@ -20,5 +19,3 @@ WORKDIR $APP_ROOT
 COPY --from=builder $BUILD_ROOT/api/target/api-*.jar $APP_ROOT/
 COPY --from=builder $BUILD_ROOT/kafka-processor/target/kafka-processor-*.jar $APP_ROOT/
 COPY --from=builder $BUILD_ROOT/sqs-processor/target/sqs-processor-*.jar $APP_ROOT/
-#ENTRYPOINT [ "sh", "-c", "java -jar $JAR_FILE" ]
-#EXPOSE 8080
