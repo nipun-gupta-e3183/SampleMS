@@ -4,6 +4,8 @@ ENV JAR_FILE api-1.0.0-SNAPSHOT.jar
 COPY ./docker/mvnsettings.xml /root/.m2/settings.xml
 WORKDIR $BUILD_ROOT
 COPY ./pom.xml $BUILD_ROOT/
+COPY ./db/pom.xml $BUILD_ROOT/db/
+COPY ./common/pom.xml $BUILD_ROOT/common/
 COPY ./api/pom.xml $BUILD_ROOT/api/
 COPY ./kafka-processor/pom.xml $BUILD_ROOT/kafka-processor/
 COPY ./sqs-processor/pom.xml $BUILD_ROOT/sqs-processor/
