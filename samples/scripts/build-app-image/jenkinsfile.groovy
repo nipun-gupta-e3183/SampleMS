@@ -12,26 +12,28 @@ node('fd-jenkins-slave-default') {
     dir('samples') { //Note: Delete this for actual projects
         stage('Maven::UpdateVersion') {
             docker.image('maven:3-jdk-11').inside {
-                env.OLD_APP_VERSION = sh(returnStdout: true, script: "./mvnw help:evaluate -Dchangelist= -Dexpression=project.version -q -DforceStdout").trim()
+                env.OLD_APP_VERSION = sh(returnStdout: true, script: "export MAVEN_CONFIG=''; ./scripts/build-app-image/get_version.sh").trim()
             }
             String[] parts = env.OLD_APP_VERSION.split("\\.")
-            switch (env.Release_Version) {
-                case "major":
+            switch (env.ReleaseType) {
+                case "Major":
                     parts[0] = String.valueOf(Integer.parseInt(parts[0]) + 1)
                     parts[1] = '0'
                     parts[2] = '0'
                     break
-                case "minor":
+                case "Minor":
                     parts[1] = String.valueOf(Integer.parseInt(parts[1]) + 1)
                     parts[2] = '0'
                     break
-                case "patch":
+                case "Patch":
                     parts[2] = String.valueOf(Integer.parseInt(parts[2]) + 1)
                     break
+                default:
+                    echo("ReleaseType param not specified. Not changing the version.")
             }
             env.APP_VERSION = String.join(".", parts)
             docker.image('maven:3-jdk-11').inside {
-                sh("./samples/mvnw versions:set-property -Dproperty=revision -DnewVersion=${APP_VERSION}")
+                sh("export MAVEN_CONFIG=''; ./scripts/build-app-image/update_version.sh ${APP_VERSION}")
             }
         }
 
@@ -43,13 +45,13 @@ node('fd-jenkins-slave-default') {
         }
 
         stage('Image::Push') {
-            sh "aws ecr get-login --region us-east-1 --no-include-email --registry-ids ${env.DOCKER_IMAGE_AWS_ACCOUNT_ID}"
+            sh("./scripts/build-app-image/ecr_login.sh")
             appImage.push()
         }
 
         stage('Git::Commit') {
             withCredentials([usernamePassword(credentialsId: env.Git_Credentials_Id, passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) {
-                sh('git commit -m"Bumping version to v${APP_VERSION}"')
+                sh('git commit -am"Bumping version to v${APP_VERSION}"')
                 sh('git tag -a v${APP_VERSION} -m"Release v${APP_VERSION}"')
                 sh('git push https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/freshdesk/freshworks-boot-samples.git HEAD:master')
                 sh('git push https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/freshdesk/freshworks-boot-samples.git HEAD:master --tags')

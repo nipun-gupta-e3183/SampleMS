@@ -1,6 +1,6 @@
 FROM maven:3-jdk-11 as builder
 ENV BUILD_ROOT /build
-COPY ./docker/mvnsettings.xml /root/.m2/settings.xml
+COPY ./mvnsettings.xml /root/.m2/settings.xml
 WORKDIR $BUILD_ROOT
 COPY ./pom.xml $BUILD_ROOT/
 COPY ./db/pom.xml $BUILD_ROOT/db/
