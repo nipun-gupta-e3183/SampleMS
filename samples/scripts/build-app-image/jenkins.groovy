@@ -9,7 +9,7 @@ node('fd-jenkins-slave-default') {
         sh "git config user.name runway-ci"
     }
 
-    stage('Tag Version') {
+    stage('Maven::UpdateVersion') {
         docker.image('maven:3-jdk-11').inside {
             env.OLD_APP_VERSION = sh(returnStdout: true, script: "mvn help:evaluate -Dchangelist= -Dexpression=project.version -q -DforceStdout").trim()
         }
@@ -34,6 +34,8 @@ node('fd-jenkins-slave-default') {
         }
     }
 
+    // TODO: Run tests & other checks
+
     stage('Image::Build') {
         env.DOCKER_TAG = "${env.DOCKER_IMAGE_URL}:${env.APP_VERSION}"
         appImage = docker.build(env.DOCKER_TAG, ".")
@@ -44,7 +46,7 @@ node('fd-jenkins-slave-default') {
         appImage.push()
     }
 
-    stage('Git Commit') {
+    stage('Git::Commit') {
         withCredentials([usernamePassword(credentialsId: env.Git_Credentials_Id, passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) {
             sh('git commit -m"Bumping version to v${APP_VERSION}"')
             sh('git tag -a v${APP_VERSION} -m"Release v${APP_VERSION}"')
