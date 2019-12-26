@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SuppressWarnings("WeakerAccess")
-@SpringBootTest
+@SpringBootTest(classes = TestConfig.class)
 public class SqsProcessorApplicationTests {
 
 	@Test
