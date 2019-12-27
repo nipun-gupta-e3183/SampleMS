@@ -8,6 +8,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.kafka.config.ConcurrentKafkaListenerContainerFactory;
 import org.springframework.kafka.core.ConsumerFactory;
 import org.springframework.kafka.core.DefaultKafkaConsumerFactory;
+import org.springframework.kafka.listener.ContainerProperties;
+import org.springframework.kafka.listener.ContainerStoppingBatchErrorHandler;
 
 import java.util.Map;
 
@@ -16,6 +18,7 @@ public class KafkaConsumerConfig {
     @Bean
     public ConsumerFactory<MessageKey, String> todoConsumerFactory(KafkaProperties properties) {
         Map<String, Object> config = properties.buildConsumerProperties();
+        config.put(ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG, false);
         config.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, MessageKeyDeserializer.class);
         config.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
         return new DefaultKafkaConsumerFactory<>(config, new MessageKeyDeserializer(), new StringDeserializer());
@@ -26,6 +29,9 @@ public class KafkaConsumerConfig {
     public ConcurrentKafkaListenerContainerFactory<MessageKey, String> todoKafkaListenerFactory(KafkaProperties properties) {
         ConcurrentKafkaListenerContainerFactory<MessageKey, String> factory = new ConcurrentKafkaListenerContainerFactory<>();
         factory.setConsumerFactory(todoConsumerFactory(properties));
+        factory.setBatchListener(true);
+        factory.setBatchErrorHandler(new ContainerStoppingBatchErrorHandler());
+        factory.getContainerProperties().setAckMode(ContainerProperties.AckMode.MANUAL_IMMEDIATE);
         return factory;
     }
 }
