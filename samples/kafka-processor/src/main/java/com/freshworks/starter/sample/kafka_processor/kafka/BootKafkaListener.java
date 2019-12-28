@@ -8,11 +8,10 @@ import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.support.Acknowledgment;
 import org.springframework.kafka.support.KafkaHeaders;
 import org.springframework.messaging.Message;
-import org.springframework.messaging.handler.invocation.InvocableHandlerMethod;
-import org.springframework.messaging.support.GenericMessage;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class BootKafkaListener {
@@ -30,9 +29,22 @@ public class BootKafkaListener {
             MessageKey messageKey = message.getHeaders().get(KafkaHeaders.RECEIVED_MESSAGE_KEY, MessageKey.class);
             if (centralListenerEndpointRegistry.hasHandler(messageKey)) {
                 @SuppressWarnings("ConstantConditions")
-                InvocableHandlerMethod handlerMethod = centralListenerEndpointRegistry.getHandlerMethod(messageKey);
+                HandlerMethods handlerMethods = centralListenerEndpointRegistry.getHandlerMethod(messageKey);
                 try {
-                    handlerMethod.invoke(new GenericMessage<>(message.getPayload(), message.getHeaders()), messageKey, consumer);
+                    if (handlerMethods.getMessageFilterMethod() != null) {
+                        Object result = handlerMethods.getMessageFilterMethod().invoke(message, messageKey, consumer);
+                        if (!Objects.equals(result, Boolean.TRUE)) {
+                            String debugMessage = String.format(
+                                    "Message filter returned false for message at topic: %s, partition: %s, offset: %s, with key: %s. Skipping.",
+                                    message.getHeaders().get(KafkaHeaders.RECEIVED_TOPIC),
+                                    message.getHeaders().get(KafkaHeaders.RECEIVED_PARTITION_ID),
+                                    message.getHeaders().get(KafkaHeaders.OFFSET),
+                                    messageKey);
+                            logger.debug(debugMessage);
+                            continue;
+                        }
+                    }
+                    handlerMethods.getListenerMethod().invoke(message, messageKey, consumer);
                 } catch (Exception e) {
                     //TODO: Handle retryable & non-retryable errors differently. Implement retries.
                     String errorMessage = String.format(
@@ -41,7 +53,7 @@ public class BootKafkaListener {
                             message.getHeaders().get(KafkaHeaders.RECEIVED_PARTITION_ID),
                             message.getHeaders().get(KafkaHeaders.OFFSET),
                             messageKey);
-                    logger.error(errorMessage);
+                    logger.error(errorMessage, e);
                 }
             } else {
                 String debugMessage = String.format(

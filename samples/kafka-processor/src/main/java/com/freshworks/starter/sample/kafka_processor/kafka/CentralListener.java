@@ -58,10 +58,17 @@ public @interface CentralListener {
     String beanRef() default "__listener";
 
     /**
+     * Whether message filter method is available or not. If this returns false, {@link #messageFilter()} configuration
+     * will not be ignored and no filtering will be performed. If this returns true, for each message, method identified
+     * by {@link #messageFilter()}  will be invoked.
+     * @return the name of the messageFilter method
+     */
+    boolean messageFilterEnabled() default true;
+
+    /**
      * The name of the method, defined in the listener class, that can check if a message is of interest to the listener.
-     * The method should accept {@link com.freshworks.starter.sample.kafka_processor.config.MessageKey} as the only
-     * argument and return boolean. If the method returned false for a message, that message will be ignored. If it
-     * returns true, the method annotated with this annotation will be invoked.
+     * The method can accept all arguments valid for listener method, however, must return boolean. If the method returned false
+     * for a message, that message will be ignored. If it returns true, the listener method will be invoked.
      * @return the name of the messageFilter method
      */
     String messageFilter() default "isEligible";

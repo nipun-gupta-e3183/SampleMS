@@ -25,6 +25,7 @@ import org.springframework.messaging.converter.MessageConverter;
 import org.springframework.messaging.handler.annotation.support.*;
 import org.springframework.messaging.handler.invocation.HandlerMethodArgumentResolver;
 import org.springframework.stereotype.Component;
+import org.springframework.util.Assert;
 import org.springframework.util.MimeType;
 import org.springframework.util.ReflectionUtils;
 import org.springframework.util.StringUtils;
@@ -102,7 +103,6 @@ public class CentralListenerAnnotationBeanPostProcessor
     protected void processCentralListener(CentralListener centralListener, Method method, Object bean) {
         Method methodToUse = checkProxy(method, bean);
         MethodCentralListenerEndpoint endpoint = new MethodCentralListenerEndpoint();
-        endpoint.setMethod(methodToUse);
         processListener(endpoint, centralListener, bean, methodToUse);
     }
 
@@ -114,6 +114,11 @@ public class CentralListenerAnnotationBeanPostProcessor
         }
         endpoint.setBean(bean);
         endpoint.setMethod(methodToUse);
+        if (centralListener.messageFilterEnabled()) {
+            Method messageFilterMethod = getMessageFilterMethod(centralListener, bean);
+            Method messageFilterMethodToUse = checkProxy(messageFilterMethod, bean);
+            endpoint.setMessageFilterMethod(messageFilterMethodToUse);
+        }
         endpoint.setMessageHandlerMethodFactory(getMessageHandlerMethodFactory());
         endpoint.setMessageSelectors(resolveMessageSelectors(centralListener));
         this.centralListenerEndpointRegistry.registerEndpoint(endpoint);
@@ -233,6 +238,16 @@ public class CentralListenerAnnotationBeanPostProcessor
             }
         }
         return result.toArray(new String[0]);
+    }
+
+    private Method getMessageFilterMethod(CentralListener centralListener, Object bean) {
+        String messageFilter = centralListener.messageFilter();
+        Set<Method> methods = MethodIntrospector.selectMethods(bean.getClass(), (ReflectionUtils.MethodFilter) method -> method.getName().equals(messageFilter));
+        Assert.notEmpty(methods, "Message filter points to non-existent method.");
+        Assert.isTrue(methods.size() == 1, "Message filter expression matches more than one method.");
+        Method method = methods.iterator().next();
+        Assert.isTrue(boolean.class.equals(method.getReturnType()), "Message filter method should return boolean");
+        return method;
     }
 
     private Object resolveExpression(String value) {

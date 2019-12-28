@@ -8,6 +8,7 @@ import java.lang.reflect.Method;
 public class MethodCentralListenerEndpoint {
     private Object bean;
     private Method method;
+    private Method messageFilterMethod;
     private MessageHandlerMethodFactory messageHandlerMethodFactory;
     private String[] messageSelectors;
 
@@ -17,6 +18,10 @@ public class MethodCentralListenerEndpoint {
 
     public void setMethod(Method method) {
         this.method = method;
+    }
+
+    public void setMessageFilterMethod(Method messageFilterMethod) {
+        this.messageFilterMethod = messageFilterMethod;
     }
 
     public void setMessageHandlerMethodFactory(MessageHandlerMethodFactory messageHandlerMethodFactory) {
@@ -31,7 +36,12 @@ public class MethodCentralListenerEndpoint {
         return messageSelectors;
     }
 
-    public InvocableHandlerMethod getMessageHandler() {
-        return messageHandlerMethodFactory.createInvocableHandlerMethod(bean, method);
+    public HandlerMethods getMessageHandler() {
+        InvocableHandlerMethod messageHandlerMethod = messageHandlerMethodFactory.createInvocableHandlerMethod(bean, method);
+        InvocableHandlerMethod messageFilterHandlerMethod = null;
+        if (messageFilterMethod != null) {
+            messageFilterHandlerMethod = messageHandlerMethodFactory.createInvocableHandlerMethod(bean, messageFilterMethod);
+        }
+        return new HandlerMethods(messageHandlerMethod, messageFilterHandlerMethod);
     }
 }

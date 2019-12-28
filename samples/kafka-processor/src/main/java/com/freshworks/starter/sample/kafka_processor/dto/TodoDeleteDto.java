@@ -7,16 +7,12 @@ import lombok.Data;
 
 @Data
 @Builder
-public class TodoDto {
+public class TodoDeleteDto {
     private long id;
-    private String title;
-    private boolean completed;
 
     @JsonCreator
-    public TodoDto(@JsonProperty("id") long id, @JsonProperty("title") String title, @JsonProperty("completed") boolean completed) {
+    public TodoDeleteDto(@JsonProperty("id") long id) {
         this.id = id;
-        this.title = title;
-        this.completed = completed;
     }
 
 }
