@@ -8,9 +8,10 @@ Steps for starting a new micro-service development
 1. Create a new Git repo for your project
 
         git clone <your_git_repo>
-        git remote add boot-samples https://github.com/freshdesk/freshworks-boot-samples
+        git remote add boot-samples git@github.com:freshdesk/freshworks-boot-samples.git
         git fetch boot-samples --tags
         git merge --allow-unrelated-histories boot-samples/master
+        git push
     
 1. Copy `./samples/*` into the root.
 
