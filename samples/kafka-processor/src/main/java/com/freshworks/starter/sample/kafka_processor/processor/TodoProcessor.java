@@ -1,11 +1,11 @@
 package com.freshworks.starter.sample.kafka_processor.processor;
 
+import com.freshworks.boot.kafka.CentralListener;
+import com.freshworks.boot.kafka.MessageKey;
 import com.freshworks.starter.sample.common.service.TodoService;
-import com.freshworks.starter.sample.kafka_processor.config.MessageKey;
 import com.freshworks.starter.sample.kafka_processor.dto.TodoCreateDto;
 import com.freshworks.starter.sample.kafka_processor.dto.TodoDeleteDto;
 import com.freshworks.starter.sample.kafka_processor.dto.TodoDto;
-import com.freshworks.starter.sample.kafka_processor.kafka.CentralListener;
 import com.freshworks.starter.sample.kafka_processor.mapper.TodoMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,17 +26,19 @@ public class TodoProcessor {
         return Integer.parseInt(messageKey.getAccountId()) % 2 == 0;
     }
 
+    @SuppressWarnings("DefaultAnnotationParam")
     @CentralListener(messageSelectors = "freshdesk:todo_create:1.0.0", messageFilterEnabled = true, messageFilter = "isEligible")
-    public void process(TodoCreateDto todoDto, MessageKey messageKey) {
+    public void process(TodoCreateDto todoDto, @SuppressWarnings("unused") MessageKey messageKey) {
         todoService.addTodo(todoMapper.convert(todoDto));
     }
 
     @CentralListener(messageSelectors = "freshdesk:todo_update:1.0.0")
-    public void process(TodoDto todoDto, MessageKey messageKey) {
+    public void process(TodoDto todoDto) {
         todoService.updateTodo(todoMapper.convert(todoDto));
     }
 
-    @CentralListener(messageSelectors = "freshdesk:todo_delete:1.0.0", messageFilterEnabled = false)
+    /* With wildcard for payload_version part */
+    @CentralListener(messageSelectors = "freshdesk:todo_delete:*", messageFilterEnabled = false)
     public void process(TodoDeleteDto todoDeleteDto, MessageKey messageKey) {
         todoService.deleteTodo(todoDeleteDto.getId());
     }

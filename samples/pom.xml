@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>com.freshworks.boot</groupId>
 		<artifactId>freshworks-boot-starter-parent</artifactId>
-		<version>1.0.0</version>
+		<version>1.1.0</version>
 		<relativePath/>
 	</parent>
 	<modelVersion>4.0.0</modelVersion>
@@ -16,9 +16,9 @@
 	<name>Freshworks boot samples</name>
 	<description>Freshworks boot samples</description>
 	<properties>
-		<revision>1.0.0</revision>
+		<revision>1.1.0</revision>
 		<changelist>-SNAPSHOT</changelist>
-		<freshworks-boot.version>1.0.0</freshworks-boot.version>
+		<freshworks-boot.version>1.1.0</freshworks-boot.version>
 	</properties>
 	<modules>
 		<module>db</module>
