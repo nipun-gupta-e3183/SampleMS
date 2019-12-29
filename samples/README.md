@@ -1,3 +1,23 @@
+# Freshworks Boot samples
+
+This repo contains sample projects for building different types of microservices using
+[freshworks-boot](https://github.com/freshdesk/freshworks-boot/) starters/libraries.
+
+Steps for starting a new micro-service development
+==============
+1. Create a new Git repo for your project
+
+        git clone <your_git_repo>
+        git remote add boot-samples https://github.com/freshdesk/freshworks-boot-samples
+        git fetch boot-samples --tags
+        git merge --allow-unrelated-histories boot-samples/master
+    
+1. Copy `./samples/*` into the root.
+
+        cp -R samples/* .
+    
+1. Start developing your modules based on the files in the root. Please don't delete `samples` directory as that will
+allow us to find new changes done in the `freshworks-boot-samples` project by doing git diff.
 
 Setting up development environment
 ==================================
@@ -50,5 +70,6 @@ Setting up development environment
 
         ../mvnw flyway:migrate -pl db/
         
-* For running API server, please refer [API readme](./api/README.md).
-* For running SQS message processor, please refer [SQS Processor readme](./sqs-processor/README.md).
+* For running an API server, please refer [API readme](./api/README.md).
+* For running an SQS message processor, please refer [SQS Processor readme](./sqs-processor/README.md).
+* For running a Kafka message processor, please refer [Kafka Processor readme](./kafka-processor/README.md).
