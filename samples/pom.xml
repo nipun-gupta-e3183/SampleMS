@@ -17,7 +17,7 @@
 	<description>Freshworks boot samples</description>
 
 	<properties>
-		<revision>1.1.0</revision>
+		<revision>1.1.1</revision>
 		<changelist>-SNAPSHOT</changelist>
 		<freshworks-boot.version>1.2.0</freshworks-boot.version>
 	</properties>
