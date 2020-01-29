@@ -7,8 +7,7 @@ import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring")
 public interface TodoMapper {
-    TodoDto convertToTodoDto(Todo todo);
+    TodoDto convert(Todo todo);
     Todo convert(TodoDto todo);
-    TodoCreateDto convertToTodoCreateDto(Todo todo);
     Todo convert(TodoCreateDto todo);
 }

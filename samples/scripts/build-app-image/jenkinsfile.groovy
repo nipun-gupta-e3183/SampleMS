@@ -13,26 +13,24 @@ node('fd-jenkins-slave-default') {
         stage('Maven::UpdateVersion') {
             docker.image('maven:3-jdk-11').inside {
                 env.OLD_APP_VERSION = sh(returnStdout: true, script: "export MAVEN_CONFIG=''; ./scripts/build-app-image/get_version.sh").trim()
-            }
-            String[] parts = env.OLD_APP_VERSION.split("\\.")
-            switch (env.ReleaseType) {
-                case "Major":
-                    parts[0] = String.valueOf(Integer.parseInt(parts[0]) + 1)
-                    parts[1] = '0'
-                    parts[2] = '0'
-                    break
-                case "Minor":
-                    parts[1] = String.valueOf(Integer.parseInt(parts[1]) + 1)
-                    parts[2] = '0'
-                    break
-                case "Patch":
-                    parts[2] = String.valueOf(Integer.parseInt(parts[2]) + 1)
-                    break
-                default:
-                    echo("ReleaseType param not specified. Not changing the version.")
-            }
-            env.APP_VERSION = String.join(".", parts)
-            docker.image('maven:3-jdk-11').inside {
+                String[] parts = env.OLD_APP_VERSION.split("\\.")
+                switch (env.ReleaseType) {
+                    case "Major":
+                        parts[0] = String.valueOf(Integer.parseInt(parts[0]) + 1)
+                        parts[1] = '0'
+                        parts[2] = '0'
+                        break
+                    case "Minor":
+                        parts[1] = String.valueOf(Integer.parseInt(parts[1]) + 1)
+                        parts[2] = '0'
+                        break
+                    case "Patch":
+                        parts[2] = String.valueOf(Integer.parseInt(parts[2]) + 1)
+                        break
+                    default:
+                        echo("ReleaseType param not specified. Not changing the version.")
+                }
+                env.APP_VERSION = String.join(".", parts)
                 sh("export MAVEN_CONFIG=''; ./scripts/build-app-image/update_version.sh ${APP_VERSION}")
             }
         }

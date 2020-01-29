@@ -12,7 +12,7 @@ Setting up development environment
             {
               "alg": "RS256",
               "typ": "JWT",
-              "kid": "key1"
+              "kid": "authz_key1"
             }
             
     * Payload
@@ -21,7 +21,7 @@ Setting up development environment
               "UserId": "123",
               "AccId": "1",
               "OrgId": "2",
-              "Permissions": "31",
+              "Permissions": "63",
               "iat": 1516239022
             }
     * RSASHA256: The key1 private/public key pair from `./src/test/resources/authz-key-pair` directory
@@ -30,7 +30,7 @@ Setting up development environment
 
         curl -X POST \
           http://localhost:8080/api/v1/todos \
-          -H 'Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6ImtleTEifQ.eyJVc2VySWQiOiIxMjMiLCJBY2NJZCI6IjEiLCJPcmdJZCI6IjIiLCJQZXJtaXNzaW9ucyI6IjMxIiwiaWF0IjoxNTE2MjM5MDIyfQ.DmEvO7fRe_hYA5ny-aTVoVmMTcl5CfQwrVhOteZCtWn0gsSBapUBtqLAfJ7KsY0EzTLZ3GKG2bEHbqNGGaAjImR_HCXKUuJ564YMDs4c5X-7bxor1Ncs3cCKv8LS058cJmgpJG2Ci6ppqzihmpt_cabzFWflewHNtI8g2IT6aPm-NUpBEPXlBAtv1I1nOXj7PzSYw-nmUeYy4aSkBfEnUzHaQ57nFyGfUNwn0Ptvn_7kx3-ily75TUnPKj7qHtz0w6tiAa8XZ7ZNdGLgR8N58zosy2pfH618YIzYO_fCO1jCqt5oEZJjNre6uqI7DA2WAIz2HFfOCrbjsxWTwEZ0xw' \
+          -H 'Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6ImF1dGh6X2tleTEifQ.eyJVc2VySWQiOiIxMjMiLCJBY2NJZCI6IjEiLCJPcmdJZCI6IjIiLCJQZXJtaXNzaW9ucyI6IjYzIiwiaWF0IjoxNTE2MjM5MDIyfQ.mFJKNLBh2_bvb5dQ7ennGm5dU9l4s855zPFG2yp1DnEN2DXoLigda6_Jkx6BzftJ9fOB6-0dW36_6iyw1UajE8DV5VT-AuQT7gVr0d4BaVJ5-6-OO4GoOf43UcXqymbKeIM_JnWRS2zXd7nlL-7T34dX1AJWhLd9KVOCMzzq4bA0LVvHFzgAcnkjm0naeTYKRnvwA6XVANSWA0oGFB1UOHCzq4R-e-oULiEItOIZNDh4LlxjBUf2Qk9pnBuvAROrfrFlfBSgRh2eb-eyqR44VTr3O3DWb_IG9ehz3oJLlVu5dekFoiqZ8PqHLsUvnpoilajZQWfglBOEaMG8FBkNZg' \
           -H 'Content-Type: application/json' \
           -H 'X-Client-ID: service1' \
           -d '{
@@ -41,7 +41,7 @@ Setting up development environment
 
         curl -X GET \
           http://localhost:8080/api/v1/todos \
-          -H 'Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6ImtleTEifQ.eyJVc2VySWQiOiIxMjMiLCJBY2NJZCI6IjEiLCJPcmdJZCI6IjIiLCJQZXJtaXNzaW9ucyI6IjMxIiwiaWF0IjoxNTE2MjM5MDIyfQ.DmEvO7fRe_hYA5ny-aTVoVmMTcl5CfQwrVhOteZCtWn0gsSBapUBtqLAfJ7KsY0EzTLZ3GKG2bEHbqNGGaAjImR_HCXKUuJ564YMDs4c5X-7bxor1Ncs3cCKv8LS058cJmgpJG2Ci6ppqzihmpt_cabzFWflewHNtI8g2IT6aPm-NUpBEPXlBAtv1I1nOXj7PzSYw-nmUeYy4aSkBfEnUzHaQ57nFyGfUNwn0Ptvn_7kx3-ily75TUnPKj7qHtz0w6tiAa8XZ7ZNdGLgR8N58zosy2pfH618YIzYO_fCO1jCqt5oEZJjNre6uqI7DA2WAIz2HFfOCrbjsxWTwEZ0xw' \
+          -H 'Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6ImF1dGh6X2tleTEifQ.eyJVc2VySWQiOiIxMjMiLCJBY2NJZCI6IjEiLCJPcmdJZCI6IjIiLCJQZXJtaXNzaW9ucyI6IjYzIiwiaWF0IjoxNTE2MjM5MDIyfQ.mFJKNLBh2_bvb5dQ7ennGm5dU9l4s855zPFG2yp1DnEN2DXoLigda6_Jkx6BzftJ9fOB6-0dW36_6iyw1UajE8DV5VT-AuQT7gVr0d4BaVJ5-6-OO4GoOf43UcXqymbKeIM_JnWRS2zXd7nlL-7T34dX1AJWhLd9KVOCMzzq4bA0LVvHFzgAcnkjm0naeTYKRnvwA6XVANSWA0oGFB1UOHCzq4R-e-oULiEItOIZNDh4LlxjBUf2Qk9pnBuvAROrfrFlfBSgRh2eb-eyqR44VTr3O3DWb_IG9ehz3oJLlVu5dekFoiqZ8PqHLsUvnpoilajZQWfglBOEaMG8FBkNZg' \
           -H 'X-Client-ID: service1' \
           -H 'Content-Type: application/json'
 
