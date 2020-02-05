@@ -27,8 +27,7 @@ def sonarqube_analysis() {
     }
 }
 
-
-node('fd-jenkins-slave-default') {
+def checkout_files(){
     stage('Checkout') {
         echo sh(script: 'env|sort', returnStdout: true)
 
@@ -38,16 +37,26 @@ node('fd-jenkins-slave-default') {
         env.BRANCH_NAME = scmVars.GIT_BRANCH.split('/')[1]
         sh "git config user.email runwayci@freshworks.com"
         sh "git config user.name runway-ci"
-    }
+    } 
+}
 
-    dir('samples') { //Note: Delete this for actual projects
-        stage('Build') {
-            docker.image('maven:3-jdk-11').inside {
-                sh("export MAVEN_CONFIG=''; cp mvnsettings.xml /root/.m2/settings.xml && ./mvnw clean install")
-                sonarqube_analysis()
-                junit '**/target/surefire-reports/**/*.xml'
-                step( [ $class: 'JacocoPublisher' ] )
-            }
+def build() {
+    stage('Build') {
+        docker.image('maven:3-jdk-11').inside {
+            sh("export MAVEN_CONFIG=''; cp mvnsettings.xml /root/.m2/settings.xml && ./mvnw clean install")
+            sonarqube_analysis()
+            junit '**/target/surefire-reports/**/*.xml'
+            step( [ $class: 'JacocoPublisher' ] )
         }
+    } 
+}
+
+
+node('fd-jenkins-slave-default') {
+
+    checkout_files()
+    
+    dir('samples') { //Note: Delete this for actual projects
+        build()
     }
 }
