@@ -6,8 +6,8 @@ def sonarqube_analysis() {
                 if (env.ghprbPullId) {
                     sh """
                     mvn sonar:sonar \
-                    -Dsonar.projectKey=${env.sonar.projectKey} \
-                    -Dsonar.github.repository=${env.sonar.repository} \
+                    -Dsonar.projectKey=${env.sonarProjectKey} \
+                    -Dsonar.github.repository=${env.sonarRepository} \
                     -Dsonar.pullrequest.key=${env.ghprbPullId} \
                     -Dsonar.pullrequest.branch=${env.ghprbSourceBranch} \
                     -Dsonar.pullrequest.base=${env.ghprbTargetBranch} \
@@ -16,8 +16,8 @@ def sonarqube_analysis() {
                 } else {
                     sh """
                     mvn sonar:sonar \
-                    -Dsonar.projectKey=${env.sonar.projectKey} \
-                    -Dsonar.github.repository=${env.sonar.repository} \
+                    -Dsonar.projectKey=${env.sonarProjectKey} \
+                    -Dsonar.github.repository=${env.sonarRepository} \
                     -Dsonar.github.oauth=${SonarqubeGithubToken}
                    """
                 }
