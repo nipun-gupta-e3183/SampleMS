@@ -18,7 +18,8 @@ def sonarqube_analysis() {
                     mvn sonar:sonar \
                     -Dsonar.projectKey=${env.sonarProjectKey} \
                     -Dsonar.github.repository=${env.sonarRepository} \
-                    -Dsonar.github.oauth=${SonarqubeGithubToken}
+                    -Dsonar.github.oauth=${SonarqubeGithubToken} \
+                    -Dsonar.pullrequest.branch=${env.BRANCH_NAME}
                    """
                 }
             }
