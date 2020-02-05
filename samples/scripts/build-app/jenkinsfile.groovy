@@ -30,11 +30,10 @@ def sonarqube_analysis() {
 
 node('fd-jenkins-slave-default') {
     stage('Checkout') {
-        echo sh(script: 'env|sort', returnStdout: true)
-
         sh "rm -rf $WORKSPACE/*"
         sh "rm -rf .git"
         checkout scm
+        env.BRANCH_NAME = sh(returnStdout: true, script: "git rev-parse --abbrev-ref HEAD").trim()
         sh "git config user.email runwayci@freshworks.com"
         sh "git config user.name runway-ci"
     }
