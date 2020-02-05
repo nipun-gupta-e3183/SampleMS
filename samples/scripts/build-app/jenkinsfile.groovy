@@ -38,20 +38,6 @@ def checkout_files(){
     } 
 }
 
-def checkout_with_merge(){
-    stage('Checkout') {
-        checkout([
-                $class: 'GitSCM',
-                branches: scm.branches,
-                doGenerateSubmoduleConfigurations: false,
-                userRemoteConfigs: scm.userRemoteConfigs,
-                extensions: [[$class: 'CleanCheckout']],
-
-        ])
-    }
-
-}
-
 def build() {
     stage('Build & Test') {
         docker.image('maven:3-jdk-11').inside {
@@ -94,7 +80,7 @@ def run_ci_checks_for_master_commit(){
 def run_ci_checks_for_pull_request(){
     node(env.slaveLabel) {
 
-        checkout_with_merge()
+        checkout_files()
 
         dir('samples') { //Note: Delete this for actual projects
             build()
