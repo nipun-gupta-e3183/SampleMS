@@ -1,4 +1,7 @@
 <settings>
+    <pluginGroups>
+        <pluginGroup>org.sonarsource.scanner.maven</pluginGroup>
+    </pluginGroups>
     <mirrors>
         <mirror>
             <!--This sends everything else to /public -->
@@ -28,6 +31,15 @@
                     <snapshots><enabled>true</enabled></snapshots>
                 </pluginRepository>
             </pluginRepositories>
+        </profile>
+        <profile>
+            <id>sonar</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <!-- Optional URL to server. Default value is http://localhost:9000 -->
+            </properties>
         </profile>
     </profiles>
     <activeProfiles>
