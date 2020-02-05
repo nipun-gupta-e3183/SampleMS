@@ -35,11 +35,7 @@ node('fd-jenkins-slave-default') {
         sh "rm -rf $WORKSPACE/*"
         sh "rm -rf .git"
         scmVars = checkout scm
-        echo scmVars.toString()
         env.BRANCH_NAME = scmVars.GIT_BRANCH.split('/')[1]
-        echo "------"
-        echo env.BRANCH_NAME
-        echo "------"
         sh "git config user.email runwayci@freshworks.com"
         sh "git config user.name runway-ci"
     }
