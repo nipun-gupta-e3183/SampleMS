@@ -30,6 +30,8 @@ def sonarqube_analysis() {
 
 node('fd-jenkins-slave-default') {
     stage('Checkout') {
+        echo sh(script: 'env|sort', returnStdout: true)
+
         sh "rm -rf $WORKSPACE/*"
         sh "rm -rf .git"
         checkout scm
