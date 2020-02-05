@@ -34,8 +34,9 @@ node('fd-jenkins-slave-default') {
 
         sh "rm -rf $WORKSPACE/*"
         sh "rm -rf .git"
-        checkout scm
-        env.BRANCH_NAME = sh(returnStdout: true, script: "git rev-parse --abbrev-ref HEAD").trim()
+        scmVars = checkout scm
+        echo scmVars.toString()
+        env.BRANCH_NAME = scmVars.GIT_BRANCH.split('/')[1]
         echo "------"
         echo env.BRANCH_NAME
         echo "------"
