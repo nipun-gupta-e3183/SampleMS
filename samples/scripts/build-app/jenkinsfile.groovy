@@ -46,7 +46,7 @@ node('fd-jenkins-slave-default') {
                 sh("export MAVEN_CONFIG=''; cp mvnsettings.xml /root/.m2/settings.xml && ./mvnw clean install")
                 sonarqube_analysis()
                 junit '**/target/surefire-reports/**/*.xml'
-                step( [ $class: 'JacocoPublisher' ] )step( [ $class: 'JacocoPublisher' ] )
+                step( [ $class: 'JacocoPublisher' ] )
             }
         }
     }
