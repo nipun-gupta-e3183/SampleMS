@@ -107,7 +107,6 @@ def run_ci_checks_for_pull_request(){
 
 echo "Hello world"
 
-
 if(env.ghprbPullId){
     run_ci_checks_for_pull_request()
 } else {
