@@ -34,6 +34,9 @@ node('fd-jenkins-slave-default') {
         sh "rm -rf .git"
         checkout scm
         env.BRANCH_NAME = sh(returnStdout: true, script: "git rev-parse --abbrev-ref HEAD").trim()
+        echo "------"
+        echo env.BRANCH_NAME
+        echo "------"
         sh "git config user.email runwayci@freshworks.com"
         sh "git config user.name runway-ci"
     }
