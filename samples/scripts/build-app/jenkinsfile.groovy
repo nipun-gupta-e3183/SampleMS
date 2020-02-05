@@ -85,6 +85,7 @@ def run_ci_checks_for_pull_request(){
         dir('samples') { //Note: Delete this for actual projects
             build()
         }
+        
     }
 
     // Run quality gate in the master node.
