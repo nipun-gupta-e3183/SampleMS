@@ -42,10 +42,6 @@ node('fd-jenkins-slave-default') {
             docker.image('maven:3-jdk-11').inside {
                 sh("export MAVEN_CONFIG=''; cp mvnsettings.xml /root/.m2/settings.xml && ./mvnw clean install")
                 sonarqube_analysis()
-            }
-        }
-        post {
-            always {
                 junit '**/target/surefire-reports/**/*.xml'
             }
         }
