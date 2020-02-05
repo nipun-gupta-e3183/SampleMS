@@ -29,8 +29,6 @@ def sonarqube_analysis() {
 
 def checkout_files(){
     stage('Checkout') {
-        echo sh(script: 'env|sort', returnStdout: true)
-
         sh "rm -rf $WORKSPACE/*"
         sh "rm -rf .git"
         scmVars = checkout scm
@@ -38,6 +36,20 @@ def checkout_files(){
         sh "git config user.email runwayci@freshworks.com"
         sh "git config user.name runway-ci"
     } 
+}
+
+def checkout_with_merge(){
+    stage('Checkout') {
+        checkout([
+                $class: 'GitSCM',
+                branches: scm.branches,
+                doGenerateSubmoduleConfigurations: false,
+                userRemoteConfigs: scm.userRemoteConfigs,
+                extensions: [[$class: 'CleanCheckout']],
+
+        ])
+    }
+
 }
 
 def build() {
@@ -82,7 +94,7 @@ def run_ci_checks_for_master_commit(){
 def run_ci_checks_for_pull_request(){
     node(env.slaveLabel) {
 
-        checkout_files()
+        checkout_with_merge()
 
         dir('samples') { //Note: Delete this for actual projects
             build()
@@ -91,4 +103,11 @@ def run_ci_checks_for_pull_request(){
 
     // Run quality gate in the master node.
     quality_gate()
+}
+
+
+if(env.ghprbPullId){
+    run_ci_checks_for_pull_request()
+} else {
+    run_ci_checks_for_master_commit()
 }
