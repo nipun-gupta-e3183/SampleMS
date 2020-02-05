@@ -41,7 +41,7 @@ def checkout_files(){
 }
 
 def build() {
-    stage('Build') {
+    stage('Build & Test') {
         docker.image('maven:3-jdk-11').inside {
             sh("export MAVEN_CONFIG=''; cp mvnsettings.xml /root/.m2/settings.xml && ./mvnw clean install")
             sonarqube_analysis()
@@ -63,14 +63,32 @@ def quality_gate(){
     }
 }
 
+def run_ci_checks_for_master_commit(){
 
-node('fd-jenkins-slave-default') {
+    node(env.slaveLabel) {
 
-    checkout_files()
-    
-    dir('samples') { //Note: Delete this for actual projects
-        build()
+        checkout_files()
+
+        dir('samples') { //Note: Delete this for actual projects
+            build()
+        }
     }
 
+    // Run quality gate in the master node.
+    quality_gate()
+}
+
+
+def run_ci_checks_for_pull_request(){
+    node(env.slaveLabel) {
+
+        checkout_files()
+
+        dir('samples') { //Note: Delete this for actual projects
+            build()
+        }
+    }
+
+    // Run quality gate in the master node.
     quality_gate()
 }
