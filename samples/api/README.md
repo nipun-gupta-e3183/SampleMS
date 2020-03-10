@@ -17,14 +17,19 @@ Setting up development environment
             
     * Payload
 
-            {
-              "UserId": "123",
-              "AccId": "1",
-              "OrgId": "2",
-              "Permissions": "63",
-              "iat": 1516239022
-            }
-    * RSASHA256: The key1 private/public key pair from `./src/test/resources/authz-key-pair` directory
+              {
+                "iat": 1516239022,
+                "exp": 1516239322,
+                "user_id": 1,
+                "product": "freshdesk",
+                "account_id": "2", // product account ID
+                "account_domain": "tmkarthi.freshdesk.com", // produt API domain
+                "org_id": 3,
+                "privileges": "1234",
+                "type": "agent", // other possible value "contact"
+                "org_user_id": 4 // FreshID agent_id for agent. Once, MCR becomes available, MCR user_id for contact. Till that time, null for contact
+              }
+      * RSASHA256: The key1 private/public key pair from `./src/test/resources/authz-key-pair` directory
     
 * Add a todo
 
