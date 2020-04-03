@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>com.freshworks.boot</groupId>
 		<artifactId>freshworks-boot-starter-parent</artifactId>
-		<version>1.2.0</version>
+		<version>1.5.0</version>
 		<relativePath/>
 	</parent>
 	<modelVersion>4.0.0</modelVersion>
@@ -17,9 +17,9 @@
 	<description>Freshworks boot samples</description>
 
 	<properties>
-		<revision>1.1.1</revision>
+		<revision>1.3.0</revision>
 		<changelist>-SNAPSHOT</changelist>
-		<freshworks-boot.version>1.2.0</freshworks-boot.version>
+		<freshworks-boot.version>1.5.0</freshworks-boot.version>
 		<jacoco.version>0.8.3</jacoco.version>
 	</properties>
 
@@ -30,18 +30,6 @@
 		<module>sqs-processor</module>
 		<module>kafka-processor</module>
 	</modules>
-	<distributionManagement>
-		<repository>
-			<id>nexus</id>
-			<name>Releases</name>
-			<url>https://nexuscentral.runwayci.com/repository/maven-releases/</url>
-		</repository>
-		<snapshotRepository>
-			<id>nexus</id>
-			<name>Snapshot</name>
-			<url>https://nexuscentral.runwayci.com/repository/maven-snapshots/</url>
-		</snapshotRepository>
-	</distributionManagement>
 	<build>
 		<plugins>
 			<plugin>
