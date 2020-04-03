@@ -2,18 +2,17 @@ package com.freshworks.starter.sample.kafka_processor.processor;
 
 import com.freshworks.boot.kafka.CentralListener;
 import com.freshworks.boot.kafka.MessageKey;
+import com.freshworks.boot.kafka.dto.central.EventChangesDto;
+import com.freshworks.boot.kafka.dto.central.EventDto;
 import com.freshworks.starter.sample.common.service.TodoService;
 import com.freshworks.starter.sample.kafka_processor.dto.TodoCreateDto;
 import com.freshworks.starter.sample.kafka_processor.dto.TodoDeleteDto;
 import com.freshworks.starter.sample.kafka_processor.dto.TodoDto;
 import com.freshworks.starter.sample.kafka_processor.mapper.TodoMapper;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 @Service
 public class TodoProcessor {
-    private final Logger logger = LoggerFactory.getLogger(TodoProcessor.class);
     private final TodoService todoService;
     private TodoMapper todoMapper;
 
@@ -23,24 +22,24 @@ public class TodoProcessor {
     }
 
     public boolean isEligible(MessageKey messageKey) {
-        return Integer.parseInt(messageKey.getAccountId()) % 2 == 0;
+        return Integer.parseInt(messageKey.getAccountId()) % 2 != 0;
     }
 
     @SuppressWarnings("DefaultAnnotationParam")
-    @CentralListener(messageSelectors = "freshdesk:todo_create:1.0.0", messageFilterEnabled = true, messageFilter = "isEligible")
-    public void process(TodoCreateDto todoDto, @SuppressWarnings("unused") MessageKey messageKey) {
-        todoService.addTodo(todoMapper.convert(todoDto));
+    @CentralListener(messageSelectors = "todo:todo_create:*", messageFilterEnabled = true, messageFilter = "isEligible")
+    public void processCreate(EventDto<TodoCreateDto, Void, Void, EventChangesDto<Void, Void, Void>> todoDto, @SuppressWarnings("unused") MessageKey messageKey) {
+        todoService.addTodo(todoMapper.convert(todoDto.getData().getPayload().getModelProperties()));
     }
 
-    @CentralListener(messageSelectors = "freshdesk:todo_update:1.0.0")
-    public void process(TodoDto todoDto) {
-        todoService.updateTodo(todoMapper.convert(todoDto));
+    @CentralListener(messageSelectors = "todo:todo_update:*")
+    public void processUpdate(EventDto<TodoDto, Void, Void, EventChangesDto<Void, Void, Void>> todoDto) {
+        todoService.updateTodo(todoMapper.convert(todoDto.getData().getPayload().getModelProperties()));
     }
 
-    /* With wildcard for payload_version part */
-    @CentralListener(messageSelectors = "freshdesk:todo_delete:*", messageFilterEnabled = false)
-    public void process(TodoDeleteDto todoDeleteDto, MessageKey messageKey) {
-        todoService.deleteTodo(todoDeleteDto.getId());
+    /* With specific version for payload_version part */
+    @CentralListener(messageSelectors = "todo:todo_delete:1.0.0", messageFilterEnabled = false)
+    public void processDelete(EventDto<TodoDeleteDto, Void, Void, EventChangesDto<Void, Void, Void>> todoDeleteDto) {
+        todoService.deleteTodo(todoDeleteDto.getData().getPayload().getModelProperties().getId());
     }
 
 }
