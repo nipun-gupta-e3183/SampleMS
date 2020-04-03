@@ -7,6 +7,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.kafka.annotation.EnableKafka;
 import org.springframework.kafka.test.EmbeddedKafkaBroker;
 import org.springframework.kafka.test.context.EmbeddedKafka;
+import org.springframework.test.annotation.DirtiesContext;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 @SuppressWarnings("WeakerAccess")
 @SpringBootTest
@@ -17,6 +20,9 @@ import org.springframework.kafka.test.context.EmbeddedKafka;
 		brokerProperties = {
 				"listeners=PLAINTEXT://localhost:12345",
 				"port=12345"})
+// @DirtiesContext makes sure embedded kafka is cleanly shutdown at the end of every test. Very inefficient though :(
+// Please refer https://github.com/spring-projects/spring-kafka/issues/194
+@DirtiesContext
 public class KafkaProcessorApplicationTests {
 
 	@Autowired
@@ -24,6 +30,7 @@ public class KafkaProcessorApplicationTests {
 
 	@Test
 	public void contextLoads() {
+		assertThat(true).isTrue();
 	}
 
 }
