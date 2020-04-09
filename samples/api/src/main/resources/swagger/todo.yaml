@@ -99,9 +99,7 @@ components:
     Todo:
       type: object
       required:
-        - "id"
         - "title"
-        - "completed"
       properties:
         id:
           type: integer
