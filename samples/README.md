@@ -70,6 +70,11 @@ Setting up development environment
           </activeProfiles>
         </settings>
 
+* Add these lines to the bash profile to store the nexus credentials in environment variables. Reload the terminal to apply the changes
+
+        export NEXUS_USERNAME=<system_username>
+        export NEXUS_PASSWORD=<system_password>
+        
 * Create `todo` schema in MySQL
 
         CREATE DATABASE todo CHARACTER SET utf8mb4
