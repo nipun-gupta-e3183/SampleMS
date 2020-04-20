@@ -57,6 +57,13 @@ Setting up development environment
               </pluginRepositories>
             </profile>
           </profiles>
+          <servers>
+            <server>
+                <id>nexus</id>
+                <username>${NEXUS_USERNAME}</username>
+                <password>${NEXUS_PASSWORD}</password>
+            </server>
+          </servers>
           <activeProfiles>
             <!--make the profile active all the time -->
             <activeProfile>nexus</activeProfile>
