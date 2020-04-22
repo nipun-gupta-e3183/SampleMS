@@ -17,6 +17,8 @@ public class Todo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "native")
     private long id;
+    @Column(name = "account_id", nullable = false)
+    private String accountId;
     private String title;
     private boolean completed;
 }

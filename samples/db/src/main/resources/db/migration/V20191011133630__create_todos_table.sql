@@ -1,6 +1,6 @@
 create table todos (
     id bigint not null auto_increment,
-    title varchar(255) not null,
+    title varchar(191) not null,
     completed tinyint(1),
     primary key (id)
 )

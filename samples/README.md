@@ -23,7 +23,8 @@ allow us to find new changes done in the `freshworks-boot-samples` project by do
 Setting up development environment
 ==================================
 * Install OpenJDK 11
-* Configure our corporate maven repository by creating `~/.m2/settings.xml` with following content. Replace SYSTEM_USERNAME and SYSTEM_PASSWORD with your system username and password
+* Configure our corporate maven repository by creating `~/.m2/settings.xml` with following content.
+ Replace SYSTEM_USERNAME and SYSTEM_PASSWORD with your AD (i.e. laptop) username and password.
 
         <settings>
           <mirrors>

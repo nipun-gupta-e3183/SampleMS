@@ -11,6 +11,8 @@ import lombok.Data;
 @AllArgsConstructor
 public class TodoDto {
     private long id;
+    private String product;
+    private String accountId;
     private String title;
     private boolean completed;
 

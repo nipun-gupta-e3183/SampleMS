@@ -39,6 +39,7 @@ public class TodoController {
     @ResponseStatus(HttpStatus.CREATED)
     public TodoDto addTodo(@RequestBody @Valid TodoCreateDto newTodoDto) {
         Todo todo = todoMapper.convert(newTodoDto);
+
         return todoMapper.convert(todoService.addTodo(todo));
     }
 

@@ -110,6 +110,18 @@ components:
         completed:
           type: boolean
           example: false
+#        created_at:
+#          type: string
+#          format: date-time
+#          readOnly: true
+#          description: Created time of Todo item
+#          example: '2020-20-20T20:20:20Z'
+#        updated_at:
+#          type: string
+#          format: date-time
+#          readOnly: true
+#          description: Last updated time of Todo item
+#          example: '2020-20-20T20:20:20Z'
     TodoListResponse:
       type: object
       properties:
