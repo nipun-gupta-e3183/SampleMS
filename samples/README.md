@@ -23,7 +23,7 @@ allow us to find new changes done in the `freshworks-boot-samples` project by do
 Setting up development environment
 ==================================
 * Install OpenJDK 11
-* Configure our corporate maven repository by creating `~/.m2/settings.xml` with following content
+* Configure our corporate maven repository by creating `~/.m2/settings.xml` with following content. Replace NEXUS_USERNAME and NEXUS_PASSWORD with your system username and password
 
         <settings>
           <mirrors>
@@ -60,8 +60,8 @@ Setting up development environment
           <servers>
             <server>
                 <id>nexus</id>
-                <username>${NEXUS_USERNAME}</username>
-                <password>${NEXUS_PASSWORD}</password>
+                <username>NEXUS_USERNAME</username>
+                <password>NEXUS_PASSWORD</password>
             </server>
           </servers>
           <activeProfiles>
@@ -69,11 +69,6 @@ Setting up development environment
             <activeProfile>nexus</activeProfile>
           </activeProfiles>
         </settings>
-
-* Add these lines to the bash profile to store the nexus credentials in environment variables. Reload the terminal to apply the changes
-
-        export NEXUS_USERNAME=<system_username>
-        export NEXUS_PASSWORD=<system_password>
         
 * Create `todo` schema in MySQL
 
