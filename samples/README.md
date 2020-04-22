@@ -23,7 +23,7 @@ allow us to find new changes done in the `freshworks-boot-samples` project by do
 Setting up development environment
 ==================================
 * Install OpenJDK 11
-* Configure our corporate maven repository by creating `~/.m2/settings.xml` with following content
+* Configure our corporate maven repository by creating `~/.m2/settings.xml` with following content. Replace SYSTEM_USERNAME and SYSTEM_PASSWORD with your system username and password
 
         <settings>
           <mirrors>
@@ -57,12 +57,19 @@ Setting up development environment
               </pluginRepositories>
             </profile>
           </profiles>
+          <servers>
+            <server>
+                <id>nexus</id>
+                <username>SYSTEM_USERNAME</username>
+                <password>SYSTEM_PASSWORD</password>
+            </server>
+          </servers>
           <activeProfiles>
             <!--make the profile active all the time -->
             <activeProfile>nexus</activeProfile>
           </activeProfiles>
         </settings>
-
+        
 * Create `todo` schema in MySQL
 
         CREATE DATABASE todo CHARACTER SET utf8mb4
