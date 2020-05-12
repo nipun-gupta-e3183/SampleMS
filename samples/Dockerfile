@@ -1,4 +1,6 @@
 FROM maven:3-jdk-11 as builder
+ARG NEXUS_USERNAME
+ARG NEXUS_PASSWORD
 ENV BUILD_ROOT /build
 COPY ./mvnsettings.xml /root/.m2/settings.xml
 WORKDIR $BUILD_ROOT

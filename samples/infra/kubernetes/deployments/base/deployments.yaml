@@ -1,0 +1,104 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: fw-boot-samples-api
+  name: fw-boot-samples-api
+  namespace: fw-boot-samples
+spec:
+  selector:
+    matchLabels:
+      app: fw-boot-samples-api
+  template:
+    metadata:
+      labels:
+        app: fw-boot-samples-api
+    spec:
+      containers:
+      - name: app
+        image: FW_BOOT_SAMPLES_IMAGE
+        imagePullPolicy: Always
+        command: ["sh", "-c", "java -jar api-*.jar"]
+        resources:
+          limits:
+            cpu: 2000m
+            memory: 4096M
+          requests:
+            cpu: 100m
+            memory: 1024M
+        ports:
+          - containerPort: 8080
+
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: fw-boot-samples-kafka-processor
+  name: fw-boot-samples-kafka-processor
+  namespace: fw-boot-samples
+spec:
+  selector:
+    matchLabels:
+      app: fw-boot-samples-kafka-processor
+  template:
+    metadata:
+      labels:
+        app: fw-boot-samples-kafka-processor
+    spec:
+      containers:
+      - name: app
+        image: FW_BOOT_SAMPLES_IMAGE
+        imagePullPolicy: Always
+        command: ["sh", "-c", "java -jar kafka-processor-*.jar"]
+        resources:
+          limits:
+            cpu: 2000m
+            memory: 4096M
+          requests:
+            cpu: 100m
+            memory: 1024M
+        ports:
+          - containerPort: 1234
+
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: fw-boot-samples-sqs-processor
+  name: fw-boot-samples-sqs-processor
+  namespace: fw-boot-samples
+spec:
+  selector:
+    matchLabels:
+      app: fw-boot-samples-sqs-processor
+  template:
+    metadata:
+      labels:
+        app: fw-boot-samples-sqs-processor
+    spec:
+      containers:
+      - name: app
+        image: FW_BOOT_SAMPLES_IMAGE
+        imagePullPolicy: Always
+        command: ["sh", "-c", "java -jar sqs-processor-*.jar"]
+        resources:
+          limits:
+            cpu: 2000m
+            memory: 4096M
+          requests:
+            cpu: 100m
+            memory: 1024M
+        ports:
+          - containerPort: 4576
+
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
