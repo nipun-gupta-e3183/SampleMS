@@ -19,7 +19,7 @@ Setting up development environment
 
               {
                 "iat": 1516239022,
-                "exp": 1516239322,
+                "exp": 1716239322,
                 "user_id": "1",
                 "product": "freshdesk",
                 "account_id": "2", // product account ID
@@ -35,7 +35,7 @@ Setting up development environment
 
         curl -X POST \
           http://localhost:8080/api/v1/todos \
-          -H 'Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6ImF1dGh6X2tleTEifQ.eyJVc2VySWQiOiIxMjMiLCJBY2NJZCI6IjEiLCJPcmdJZCI6IjIiLCJQZXJtaXNzaW9ucyI6IjYzIiwiaWF0IjoxNTE2MjM5MDIyfQ.mFJKNLBh2_bvb5dQ7ennGm5dU9l4s855zPFG2yp1DnEN2DXoLigda6_Jkx6BzftJ9fOB6-0dW36_6iyw1UajE8DV5VT-AuQT7gVr0d4BaVJ5-6-OO4GoOf43UcXqymbKeIM_JnWRS2zXd7nlL-7T34dX1AJWhLd9KVOCMzzq4bA0LVvHFzgAcnkjm0naeTYKRnvwA6XVANSWA0oGFB1UOHCzq4R-e-oULiEItOIZNDh4LlxjBUf2Qk9pnBuvAROrfrFlfBSgRh2eb-eyqR44VTr3O3DWb_IG9ehz3oJLlVu5dekFoiqZ8PqHLsUvnpoilajZQWfglBOEaMG8FBkNZg' \
+          -H 'Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6ImF1dGh6X2tleTEifQ.eyJpYXQiOjE1MTYyMzkwMjIsImV4cCI6MTcxNjIzOTMyMiwidXNlcl9pZCI6IjEiLCJwcm9kdWN0IjoiZnJlc2hkZXNrIiwiYWNjb3VudF9pZCI6IjIiLCJhY2NvdW50X2RvbWFpbiI6InRta2FydGhpLmZyZXNoZGVzay5jb20iLCJvcmdfaWQiOiIzIiwicHJpdmlsZWdlcyI6IjIwNDciLCJ0eXBlIjoiYWdlbnQiLCJvcmdfdXNlcl9pZCI6IjQifQ.FRpmVYicDhrtpWoYlHRuA-cpjTG5rRJ8qIOXsPHg8Hwq1KBFqzdA1IvFoKUbU5_ufiZYYHGF0Lzg0tbMfvkjvhJkdmYTsGyaxMqu6HP-bMyyaLJhHron59xpWwCC-j6Qg6Vj03MCtQeDG7WKdJLRtXxL0L48DRHq_fl3i2nhS4h4hPIEbSWZnBMxowSqZpYLcTGG-QSCZv-IUuvWy9VVzeV3JkKUQNMCCy9N6tNPzm2xVZdX4_Ke5W9NJ8mKx0_rictQGJ_DDQ6ITqQltOlCXl2TN3y29uMBjrI6d0hoPzrAFZzThKfFfqfBGsfwQjq_mDMft8SfYIKdFY2ao3wF5g' \
           -H 'Content-Type: application/json' \
           -H 'X-Client-ID: service1' \
           -d '{
