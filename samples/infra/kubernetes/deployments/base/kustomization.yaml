@@ -4,4 +4,4 @@ resources:
 - deployments.yaml
 images:
 - name: FW_BOOT_SAMPLES_IMAGE
-  newTag: v1.6.0
+  newTag: v1.7.0
