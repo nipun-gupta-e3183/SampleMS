@@ -107,7 +107,7 @@
                         <configuration>
                             <inputSpec>${basedir}/src/main/resources/swagger/todo.yaml</inputSpec>
                             <output>${project.build.directory}/generated-sources/swagger</output>
-                            <language>java</language>
+                            <language>spring</language>
                             <modelPackage>${project.groupId}.api.v1.dto</modelPackage>
                             <generateApis>false</generateApis>
                             <generateApiTests>false</generateApiTests>
@@ -119,8 +119,9 @@
                             <generateSupportingFiles>false</generateSupportingFiles>
                             <configOptions>
                                 <useBeanValidation>true</useBeanValidation>
+                                <dateLibrary>java8</dateLibrary>
                             </configOptions>
-                            <library>jersey2</library>
+                            <library>spring-boot</library>
                         </configuration>
                     </execution>
                 </executions>
