@@ -17,7 +17,7 @@
 	<description>Freshworks boot samples</description>
 
 	<properties>
-		<revision>1.7.0</revision>
+		<revision>1.8.0</revision>
 		<changelist>-SNAPSHOT</changelist>
 		<freshworks-boot.version>1.6.0</freshworks-boot.version>
 		<jacoco.version>0.8.3</jacoco.version>
