@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>com.freshworks.boot</groupId>
 		<artifactId>freshworks-boot-starter-parent</artifactId>
-		<version>1.6.0</version>
+		<version>1.8.0</version>
 		<relativePath/>
 	</parent>
 	<modelVersion>4.0.0</modelVersion>
@@ -19,7 +19,7 @@
 	<properties>
 		<revision>1.8.0</revision>
 		<changelist>-SNAPSHOT</changelist>
-		<freshworks-boot.version>1.6.0</freshworks-boot.version>
+		<freshworks-boot.version>1.8.0</freshworks-boot.version>
 		<jacoco.version>0.8.3</jacoco.version>
 	</properties>
 

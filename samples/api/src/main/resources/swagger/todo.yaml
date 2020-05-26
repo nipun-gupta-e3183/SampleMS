@@ -9,6 +9,19 @@ servers:
   - url: http://localhost:8080/api/v1
     description: "localhost"
 paths:
+  /about:
+    get:
+      tags:
+        - about
+      operationId: About
+      summary: About. This is an unauthenticated endpoint as configured in CustomSecurityConfiguration.
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/About'
   /todos:
     get:
       tags:
@@ -96,6 +109,14 @@ paths:
             Success
 components:
   schemas:
+    About:
+      type: object
+      required:
+        - "name"
+      properties:
+        name:
+          type: string
+          example: "Sample REST API"
     Todo:
       type: object
       required:
