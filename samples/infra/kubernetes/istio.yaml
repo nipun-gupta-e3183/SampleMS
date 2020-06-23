@@ -1,0 +1,35 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: Gateway
+metadata:
+  name: fw-boot-samples-gateway
+  namespace: fw-boot-samples
+spec:
+  selector:
+    istio: ingressgateway # use Istio default gateway implementation
+  servers:
+  - port:
+      number: 80
+      name: http
+      protocol: HTTP
+    hosts:
+    - "*"
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: fw-boot-samples-vs
+  namespace: fw-boot-samples
+spec:
+  hosts:
+  - "*"
+  gateways:
+  - fw-boot-samples-gateway
+  http:
+  - match:
+    - uri:
+        prefix: "/api/v1/todos"
+    route:
+    - destination:
+        port:
+          number: 80
+        host: fw-boot-samples-service.fw-boot-samples.svc.cluster.local
