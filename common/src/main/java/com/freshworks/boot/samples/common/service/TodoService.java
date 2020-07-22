@@ -1,12 +1,14 @@
 package com.freshworks.boot.samples.common.service;
 
-import com.freshworks.boot.common.context.AccountContext;
+import com.freshworks.boot.common.context.account.AccountContext;
 import com.freshworks.boot.common.persistence.NotFoundException;
 import com.freshworks.boot.samples.common.model.Account;
 import com.freshworks.boot.samples.common.model.Todo;
 import com.freshworks.boot.samples.common.repository.TodoRepository;
 import org.springframework.stereotype.Component;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import java.util.List;
 
 @Component
@@ -14,6 +16,9 @@ public class TodoService {
 
     private final TodoRepository todoRepository;
     private AccountContext<Account> accountContext;
+
+    @PersistenceContext
+    public EntityManager entityManager;
 
     public TodoService(TodoRepository todoRepository, AccountContext<Account> accountContext) {
         this.todoRepository = todoRepository;
@@ -25,7 +30,6 @@ public class TodoService {
     }
 
     public Todo addTodo(Todo todo) {
-        todo.setAccountId(getAccountID());
         return todoRepository.save(todo);
     }
 
@@ -36,7 +40,6 @@ public class TodoService {
 
     public Todo updateTodo(Todo updateTodo) {
         getTodo(updateTodo.getId());
-        updateTodo.setAccountId(getAccountID());
         return todoRepository.save(updateTodo);
     }
 
@@ -48,8 +51,8 @@ public class TodoService {
         todoRepository.delete(todo);
     }
 
-    private String getAccountID() {
-        return accountContext.getAccount().getAccountID();
+    public String getAccountID() {
+        return accountContext.get().getAccountID();
     }
 
 }

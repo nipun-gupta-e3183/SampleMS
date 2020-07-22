@@ -1,7 +1,7 @@
 package com.freshworks.boot.samples.sqs_processor.processor;
 
-import com.freshworks.boot.common.context.AccountContext;
-import com.freshworks.boot.common.context.AccountFetcher;
+import com.freshworks.boot.common.context.account.AccountContext;
+import com.freshworks.boot.common.AccountFetcher;
 import com.freshworks.boot.samples.common.model.Account;
 import com.freshworks.boot.samples.common.service.TodoService;
 import com.freshworks.boot.samples.sqs_processor.dto.TodoDto;

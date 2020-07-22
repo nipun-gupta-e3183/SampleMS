@@ -4,6 +4,9 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Filter;
+import org.hibernate.annotations.FilterDef;
+import org.hibernate.annotations.ParamDef;
 
 import javax.persistence.*;
 
@@ -13,12 +16,13 @@ import javax.persistence.*;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Todo {
+@FilterDef(name = "accountFilter", parameters = {@ParamDef(name = "accountId", type = "string")})
+@Filter(name = "accountFilter", condition = "account_id = :accountId")
+public class Todo extends AccountInfo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "native")
     private long id;
-    @Column(name = "account_id", nullable = false)
-    private String accountId;
+
     private String title;
     private boolean completed;
 }

@@ -1,6 +1,6 @@
 package com.freshworks.boot.samples.common.service;
 
-import com.freshworks.boot.common.context.AccountFetcher;
+import com.freshworks.boot.common.AccountFetcher;
 import com.freshworks.boot.samples.common.model.Account;
 import org.springframework.stereotype.Service;
 

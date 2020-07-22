@@ -1,7 +1,7 @@
 package com.freshworks.boot.samples.kafka_processor.processor;
 
 import com.freshworks.boot.kafka.CentralListener;
-import com.freshworks.boot.kafka.MessageKey;
+import com.freshworks.boot.messaging.MessageKey;
 import com.freshworks.boot.kafka.dto.central.EventChangesDto;
 import com.freshworks.boot.kafka.dto.central.EventDto;
 import com.freshworks.boot.samples.common.service.TodoService;
